@@ -1,0 +1,15 @@
+--- net/minecraft/SharedConstants.java
++++ net/minecraft/SharedConstants.java
+@@ -40,11 +40,11 @@
+ 
+       return CURRENT_VERSION;
+    }
+ 
+    public static int getProtocolVersion() {
+-      return 1073741841;
++      return 1073741842;
+    }
+ 
+    static {
+       NETTY_LEAK_DETECTION = ResourceLeakDetector.Level.DISABLED;
+       MAXIMUM_TICK_TIME_NANOS = Duration.ofMillis(300L).toNanos();

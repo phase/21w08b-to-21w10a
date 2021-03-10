@@ -1,0 +1,27 @@
+--- net/minecraft/data/worldgen/ProcessorLists.java
++++ net/minecraft/data/worldgen/ProcessorLists.java
+@@ -52,10 +52,13 @@
+    public static final StructureProcessorList ENTRANCE_REPLACEMENT;
+    public static final StructureProcessorList BRIDGE;
+    public static final StructureProcessorList ROOF;
+    public static final StructureProcessorList HIGH_WALL;
+    public static final StructureProcessorList HIGH_RAMPART;
++   public static final StructureProcessorList FOSSIL_ROT;
++   public static final StructureProcessorList FOSSIL_COAL;
++   public static final StructureProcessorList FOSSIL_DIAMONDS;
+ 
+    private static StructureProcessorList register(String var0, ImmutableList<StructureProcessor> var1) {
+       ResourceLocation var2 = new ResourceLocation(var0);
+       StructureProcessorList var3 = new StructureProcessorList(var1);
+       return (StructureProcessorList)BuiltinRegistries.register(BuiltinRegistries.PROCESSOR_LIST, (ResourceLocation)var2, var3);
+@@ -92,7 +95,10 @@
+       ENTRANCE_REPLACEMENT = register("entrance_replacement", ImmutableList.of(new RuleProcessor(ImmutableList.of(new ProcessorRule(new RandomBlockMatchTest(Blocks.CHISELED_POLISHED_BLACKSTONE, 0.5F), AlwaysTrueTest.INSTANCE, Blocks.AIR.defaultBlockState()), new ProcessorRule(new RandomBlockMatchTest(Blocks.GOLD_BLOCK, 0.6F), AlwaysTrueTest.INSTANCE, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS.defaultBlockState()), REMOVE_GILDED_BLACKSTONE, ADD_GILDED_BLACKSTONE))));
+       BRIDGE = register("bridge", ImmutableList.of(new RuleProcessor(ImmutableList.of(new ProcessorRule(new RandomBlockMatchTest(Blocks.POLISHED_BLACKSTONE_BRICKS, 0.3F), AlwaysTrueTest.INSTANCE, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS.defaultBlockState()), new ProcessorRule(new RandomBlockMatchTest(Blocks.BLACKSTONE, 1.0E-4F), AlwaysTrueTest.INSTANCE, Blocks.AIR.defaultBlockState())))));
+       ROOF = register("roof", ImmutableList.of(new RuleProcessor(ImmutableList.of(new ProcessorRule(new RandomBlockMatchTest(Blocks.POLISHED_BLACKSTONE_BRICKS, 0.3F), AlwaysTrueTest.INSTANCE, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS.defaultBlockState()), new ProcessorRule(new RandomBlockMatchTest(Blocks.POLISHED_BLACKSTONE_BRICKS, 0.15F), AlwaysTrueTest.INSTANCE, Blocks.AIR.defaultBlockState()), new ProcessorRule(new RandomBlockMatchTest(Blocks.POLISHED_BLACKSTONE_BRICKS, 0.3F), AlwaysTrueTest.INSTANCE, Blocks.BLACKSTONE.defaultBlockState())))));
+       HIGH_WALL = register("high_wall", ImmutableList.of(new RuleProcessor(ImmutableList.of(new ProcessorRule(new RandomBlockMatchTest(Blocks.POLISHED_BLACKSTONE_BRICKS, 0.01F), AlwaysTrueTest.INSTANCE, Blocks.AIR.defaultBlockState()), new ProcessorRule(new RandomBlockMatchTest(Blocks.POLISHED_BLACKSTONE_BRICKS, 0.5F), AlwaysTrueTest.INSTANCE, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS.defaultBlockState()), new ProcessorRule(new RandomBlockMatchTest(Blocks.POLISHED_BLACKSTONE_BRICKS, 0.3F), AlwaysTrueTest.INSTANCE, Blocks.BLACKSTONE.defaultBlockState()), REMOVE_GILDED_BLACKSTONE))));
+       HIGH_RAMPART = register("high_rampart", ImmutableList.of(new RuleProcessor(ImmutableList.of(new ProcessorRule(new RandomBlockMatchTest(Blocks.GOLD_BLOCK, 0.3F), AlwaysTrueTest.INSTANCE, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS.defaultBlockState()), new ProcessorRule(AlwaysTrueTest.INSTANCE, AlwaysTrueTest.INSTANCE, new AxisAlignedLinearPosTest(0.0F, 0.05F, 0, 100, Direction.Axis.Y), Blocks.AIR.defaultBlockState()), REMOVE_GILDED_BLACKSTONE))));
++      FOSSIL_ROT = register("fossil_rot", ImmutableList.of(new BlockRotProcessor(0.9F)));
++      FOSSIL_COAL = register("fossil_coal", ImmutableList.of(new BlockRotProcessor(0.1F)));
++      FOSSIL_DIAMONDS = register("fossil_diamonds", ImmutableList.of(new BlockRotProcessor(0.1F), new RuleProcessor(ImmutableList.of(new ProcessorRule(new BlockMatchTest(Blocks.COAL_ORE), AlwaysTrueTest.INSTANCE, Blocks.DEEPSLATE_DIAMOND_ORE.defaultBlockState())))));
+    }
+ }

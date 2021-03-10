@@ -1,0 +1,13 @@
+--- net/minecraft/client/renderer/entity/GlowSquidRenderer.java
++++ net/minecraft/client/renderer/entity/GlowSquidRenderer.java
+@@ -16,8 +16,9 @@
+    public ResourceLocation getTextureLocation(GlowSquid var1) {
+       return GLOW_SQUID_LOCATION;
+    }
+ 
+    protected int getBlockLightLevel(GlowSquid var1, BlockPos var2) {
+-      return Mth.clamp(15 - var1.getDarkTicksRemaining(), 0, 15);
++      int var3 = (int)Mth.clampedLerp(0.0D, 15.0D, (double)(1.0F - (float)var1.getDarkTicksRemaining() / 10.0F));
++      return var3 == 15 ? 15 : Math.max(var3, super.getBlockLightLevel(var1, var2));
+    }
+ }

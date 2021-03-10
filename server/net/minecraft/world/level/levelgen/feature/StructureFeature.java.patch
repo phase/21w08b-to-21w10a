@@ -1,0 +1,47 @@
+--- net/minecraft/world/level/levelgen/feature/StructureFeature.java
++++ net/minecraft/world/level/levelgen/feature/StructureFeature.java
+@@ -4,20 +4,22 @@
+ import com.google.common.collect.HashBiMap;
+ import com.google.common.collect.ImmutableList;
+ import com.google.common.collect.ImmutableMap;
+ import com.google.common.collect.Maps;
+ import com.mojang.serialization.Codec;
++import com.mojang.serialization.DataResult;
+ import java.util.List;
+ import java.util.Locale;
+ import java.util.Map;
+ import javax.annotation.Nullable;
+ import net.minecraft.core.BlockPos;
+ import net.minecraft.core.Registry;
+ import net.minecraft.core.RegistryAccess;
+ import net.minecraft.core.SectionPos;
+ import net.minecraft.nbt.CompoundTag;
+ import net.minecraft.nbt.ListTag;
++import net.minecraft.nbt.NbtOps;
+ import net.minecraft.resources.ResourceLocation;
+ import net.minecraft.world.level.ChunkPos;
+ import net.minecraft.world.level.LevelHeightAccessor;
+ import net.minecraft.world.level.LevelReader;
+ import net.minecraft.world.level.StructureFeatureManager;
+@@ -106,11 +108,20 @@
+             LOGGER.error((String)"Unknown feature id: {}", (Object)var4);
+             return null;
+          } else {
+             ChunkPos var6 = new ChunkPos(var1.getInt("ChunkX"), var1.getInt("ChunkZ"));
+             int var7 = var1.getInt("references");
+-            BoundingBox var8 = var1.contains("BB") ? new BoundingBox(var1.getIntArray("BB")) : BoundingBox.getUnknownBox();
++            BoundingBox var8;
++            if (var1.contains("BB")) {
++               DataResult var10000 = BoundingBox.CODEC.parse(NbtOps.INSTANCE, var1.get("BB"));
++               Logger var10001 = LOGGER;
++               var10001.getClass();
++               var8 = (BoundingBox)var10000.resultOrPartial(var10001::error).orElse(new BoundingBox(BlockPos.ZERO));
++            } else {
++               var8 = BoundingBox.getUnknownBox();
++            }
++
+             ListTag var9 = var1.getList("Children", 10);
+ 
+             try {
+                StructureStart var10 = var5.createStart(var6, var8, var7, var2);
+ 

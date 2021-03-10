@@ -1,0 +1,26 @@
+--- net/minecraft/client/renderer/debug/HeightMapRenderer.java
++++ net/minecraft/client/renderer/debug/HeightMapRenderer.java
+@@ -26,11 +26,10 @@
+       this.minecraft = var1;
+    }
+ 
+    public void render(PoseStack var1, MultiBufferSource var2, double var3, double var5, double var7) {
+       ClientLevel var9 = this.minecraft.level;
+-      RenderSystem.pushMatrix();
+       RenderSystem.disableBlend();
+       RenderSystem.disableTexture();
+       RenderSystem.enableDepthTest();
+       BlockPos var10 = new BlockPos(var3, 0.0D, var7);
+       Tesselator var11 = Tesselator.getInstance();
+@@ -60,11 +59,10 @@
+          }
+       }
+ 
+       var11.end();
+       RenderSystem.enableTexture();
+-      RenderSystem.popMatrix();
+    }
+ 
+    private Vector3f getColor(Heightmap.Types var1) {
+       switch(var1) {
+       case WORLD_SURFACE_WG:

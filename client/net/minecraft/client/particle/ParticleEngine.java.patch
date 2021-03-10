@@ -1,0 +1,102 @@
+--- net/minecraft/client/particle/ParticleEngine.java
++++ net/minecraft/client/particle/ParticleEngine.java
+@@ -33,10 +33,11 @@
+ import net.minecraft.CrashReport;
+ import net.minecraft.CrashReportCategory;
+ import net.minecraft.ReportedException;
+ import net.minecraft.client.Camera;
+ import net.minecraft.client.multiplayer.ClientLevel;
++import net.minecraft.client.renderer.GameRenderer;
+ import net.minecraft.client.renderer.LightTexture;
+ import net.minecraft.client.renderer.MultiBufferSource;
+ import net.minecraft.client.renderer.texture.AbstractTexture;
+ import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+ import net.minecraft.client.renderer.texture.TextureAtlas;
+@@ -401,58 +402,56 @@
+       }
+    }
+ 
+    public void render(PoseStack var1, MultiBufferSource.BufferSource var2, LightTexture var3, Camera var4, float var5) {
+       var3.turnOnLightLayer();
+-      RenderSystem.enableAlphaTest();
+-      RenderSystem.defaultAlphaFunc();
+       RenderSystem.enableDepthTest();
+-      RenderSystem.enableFog();
+-      RenderSystem.pushMatrix();
+-      RenderSystem.multMatrix(var1.last().pose());
+-      Iterator var6 = RENDER_ORDER.iterator();
++      PoseStack var6 = RenderSystem.getModelViewStack();
++      var6.pushPose();
++      var6.mulPoseMatrix(var1.last().pose());
++      RenderSystem.applyModelViewMatrix();
++      Iterator var7 = RENDER_ORDER.iterator();
+ 
+       while(true) {
+-         ParticleRenderType var7;
+-         Iterable var8;
++         ParticleRenderType var8;
++         Iterable var9;
+          do {
+-            if (!var6.hasNext()) {
+-               RenderSystem.popMatrix();
++            if (!var7.hasNext()) {
++               var6.popPose();
++               RenderSystem.applyModelViewMatrix();
+                RenderSystem.depthMask(true);
+-               RenderSystem.depthFunc(515);
+                RenderSystem.disableBlend();
+-               RenderSystem.defaultAlphaFunc();
+                var3.turnOffLightLayer();
+-               RenderSystem.disableFog();
+                return;
+             }
+ 
+-            var7 = (ParticleRenderType)var6.next();
+-            var8 = (Iterable)this.particles.get(var7);
+-         } while(var8 == null);
++            var8 = (ParticleRenderType)var7.next();
++            var9 = (Iterable)this.particles.get(var8);
++         } while(var9 == null);
+ 
+-         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+-         Tesselator var9 = Tesselator.getInstance();
+-         BufferBuilder var10 = var9.getBuilder();
+-         var7.begin(var10, this.textureManager);
+-         Iterator var11 = var8.iterator();
++         RenderSystem.setShader(GameRenderer::getParticleShader);
++         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
++         Tesselator var10 = Tesselator.getInstance();
++         BufferBuilder var11 = var10.getBuilder();
++         var8.begin(var11, this.textureManager);
++         Iterator var12 = var9.iterator();
+ 
+-         while(var11.hasNext()) {
+-            Particle var12 = (Particle)var11.next();
++         while(var12.hasNext()) {
++            Particle var13 = (Particle)var12.next();
+ 
+             try {
+-               var12.render(var10, var4, var5);
+-            } catch (Throwable var16) {
+-               CrashReport var14 = CrashReport.forThrowable(var16, "Rendering Particle");
+-               CrashReportCategory var15 = var14.addCategory("Particle being rendered");
+-               var15.setDetail("Particle", var12::toString);
+-               var15.setDetail("Particle Type", var7::toString);
+-               throw new ReportedException(var14);
++               var13.render(var11, var4, var5);
++            } catch (Throwable var17) {
++               CrashReport var15 = CrashReport.forThrowable(var17, "Rendering Particle");
++               CrashReportCategory var16 = var15.addCategory("Particle being rendered");
++               var16.setDetail("Particle", var13::toString);
++               var16.setDetail("Particle Type", var8::toString);
++               throw new ReportedException(var15);
+             }
+          }
+ 
+-         var7.end(var9);
++         var8.end(var10);
+       }
+    }
+ 
+    public void setLevel(@Nullable ClientLevel var1) {
+       this.level = var1;

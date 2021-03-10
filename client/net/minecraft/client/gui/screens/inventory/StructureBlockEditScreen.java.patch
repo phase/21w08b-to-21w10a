@@ -1,0 +1,40 @@
+--- net/minecraft/client/gui/screens/inventory/StructureBlockEditScreen.java
++++ net/minecraft/client/gui/screens/inventory/StructureBlockEditScreen.java
+@@ -9,10 +9,11 @@
+ import net.minecraft.client.gui.components.Button;
+ import net.minecraft.client.gui.components.CycleButton;
+ import net.minecraft.client.gui.components.EditBox;
+ import net.minecraft.client.gui.screens.Screen;
+ import net.minecraft.core.BlockPos;
++import net.minecraft.core.Vec3i;
+ import net.minecraft.network.chat.CommonComponents;
+ import net.minecraft.network.chat.Component;
+ import net.minecraft.network.chat.FormattedText;
+ import net.minecraft.network.chat.TextComponent;
+ import net.minecraft.network.chat.TranslatableComponent;
+@@ -194,11 +195,11 @@
+       this.children.add(this.posYEdit);
+       this.posZEdit = new EditBox(this.font, this.width / 2 + 8, 80, 80, 20, new TranslatableComponent("structure_block.position.z"));
+       this.posZEdit.setMaxLength(15);
+       this.posZEdit.setValue(Integer.toString(var1.getZ()));
+       this.children.add(this.posZEdit);
+-      BlockPos var2 = this.structure.getStructureSize();
++      Vec3i var2 = this.structure.getStructureSize();
+       this.sizeXEdit = new EditBox(this.font, this.width / 2 - 152, 120, 80, 20, new TranslatableComponent("structure_block.size.x"));
+       this.sizeXEdit.setMaxLength(15);
+       this.sizeXEdit.setValue(Integer.toString(var2.getX()));
+       this.children.add(this.sizeXEdit);
+       this.sizeYEdit = new EditBox(this.font, this.width / 2 - 72, 120, 80, 20, new TranslatableComponent("structure_block.size.y"));
+@@ -337,11 +338,11 @@
+ 
+    }
+ 
+    private boolean sendToServer(StructureBlockEntity.UpdateType var1) {
+       BlockPos var2 = new BlockPos(this.parseCoordinate(this.posXEdit.getValue()), this.parseCoordinate(this.posYEdit.getValue()), this.parseCoordinate(this.posZEdit.getValue()));
+-      BlockPos var3 = new BlockPos(this.parseCoordinate(this.sizeXEdit.getValue()), this.parseCoordinate(this.sizeYEdit.getValue()), this.parseCoordinate(this.sizeZEdit.getValue()));
++      Vec3i var3 = new Vec3i(this.parseCoordinate(this.sizeXEdit.getValue()), this.parseCoordinate(this.sizeYEdit.getValue()), this.parseCoordinate(this.sizeZEdit.getValue()));
+       float var4 = this.parseIntegrity(this.integrityEdit.getValue());
+       long var5 = this.parseSeed(this.seedEdit.getValue());
+       this.minecraft.getConnection().send((Packet)(new ServerboundSetStructureBlockPacket(this.structure.getBlockPos(), var1, this.structure.getMode(), this.nameEdit.getValue(), var2, var3, this.structure.getMirror(), this.structure.getRotation(), this.dataEdit.getValue(), this.structure.isIgnoreEntities(), this.structure.getShowAir(), this.structure.getShowBoundingBox(), var4, var5)));
+       return true;
+    }

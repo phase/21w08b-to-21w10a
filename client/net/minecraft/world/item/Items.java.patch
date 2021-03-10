@@ -1,0 +1,217 @@
+--- net/minecraft/world/item/Items.java
++++ net/minecraft/world/item/Items.java
+@@ -55,11 +55,13 @@
+    public static final Item GOLD_ORE;
+    public static final Item DEEPSLATE_GOLD_ORE;
+    public static final Item IRON_ORE;
+    public static final Item DEEPSLATE_IRON_ORE;
+    public static final Item COPPER_ORE;
++   public static final Item DEEPSLATE_COPPER_ORE;
+    public static final Item COAL_ORE;
++   public static final Item DEEPSLATE_COAL_ORE;
+    public static final Item NETHER_GOLD_ORE;
+    public static final Item OAK_LOG;
+    public static final Item SPRUCE_LOG;
+    public static final Item BIRCH_LOG;
+    public static final Item JUNGLE_LOG;
+@@ -251,15 +253,18 @@
+    public static final Item INFESTED_COBBLESTONE;
+    public static final Item INFESTED_STONE_BRICKS;
+    public static final Item INFESTED_MOSSY_STONE_BRICKS;
+    public static final Item INFESTED_CRACKED_STONE_BRICKS;
+    public static final Item INFESTED_CHISELED_STONE_BRICKS;
++   public static final Item INFESTED_DEEPSLATE;
+    public static final Item STONE_BRICKS;
+    public static final Item MOSSY_STONE_BRICKS;
+    public static final Item CRACKED_STONE_BRICKS;
+    public static final Item CHISELED_STONE_BRICKS;
++   public static final Item CRACKED_DEEPSLATE_BRICKS;
+    public static final Item DEEPSLATE_BRICKS;
++   public static final Item CRACKED_DEEPSLATE_TILES;
+    public static final Item DEEPSLATE_TILES;
+    public static final Item CHISELED_DEEPSLATE;
+    public static final Item BROWN_MUSHROOM_BLOCK;
+    public static final Item RED_MUSHROOM_BLOCK;
+    public static final Item MUSHROOM_STEM;
+@@ -283,10 +288,11 @@
+    public static final Item END_STONE;
+    public static final Item END_STONE_BRICKS;
+    public static final Item DRAGON_EGG;
+    public static final Item SANDSTONE_STAIRS;
+    public static final Item EMERALD_ORE;
++   public static final Item DEEPSLATE_EMERALD_ORE;
+    public static final Item ENDER_CHEST;
+    public static final Item EMERALD_BLOCK;
+    public static final Item SPRUCE_STAIRS;
+    public static final Item BIRCH_STAIRS;
+    public static final Item JUNGLE_STAIRS;
+@@ -311,12 +317,12 @@
+    public static final Item BLACKSTONE_WALL;
+    public static final Item POLISHED_BLACKSTONE_WALL;
+    public static final Item POLISHED_BLACKSTONE_BRICK_WALL;
+    public static final Item COBBLED_DEEPSLATE_WALL;
+    public static final Item POLISHED_DEEPSLATE_WALL;
+-   public static final Item DEEPSLATE_TILE_WALL;
+    public static final Item DEEPSLATE_BRICK_WALL;
++   public static final Item DEEPSLATE_TILE_WALL;
+    public static final Item ANVIL;
+    public static final Item CHIPPED_ANVIL;
+    public static final Item DAMAGED_ANVIL;
+    public static final Item NETHER_QUARTZ_ORE;
+    public static final Item CHISELED_QUARTZ_BLOCK;
+@@ -540,23 +546,23 @@
+    public static final Item DEEPSLATE_BRICK_STAIRS;
+    public static final Item POLISHED_GRANITE_SLAB;
+    public static final Item SMOOTH_RED_SANDSTONE_SLAB;
+    public static final Item MOSSY_STONE_BRICK_SLAB;
+    public static final Item POLISHED_DIORITE_SLAB;
+-   public static final Item POLISHED_DEEPSLATE_SLAB;
+    public static final Item MOSSY_COBBLESTONE_SLAB;
+    public static final Item END_STONE_BRICK_SLAB;
+    public static final Item SMOOTH_SANDSTONE_SLAB;
+    public static final Item SMOOTH_QUARTZ_SLAB;
+    public static final Item GRANITE_SLAB;
+    public static final Item ANDESITE_SLAB;
+    public static final Item RED_NETHER_BRICK_SLAB;
+    public static final Item POLISHED_ANDESITE_SLAB;
+    public static final Item DIORITE_SLAB;
+    public static final Item COBBLED_DEEPSLATE_SLAB;
+-   public static final Item DEEPSLATE_TILE_SLAB;
++   public static final Item POLISHED_DEEPSLATE_SLAB;
+    public static final Item DEEPSLATE_BRICK_SLAB;
++   public static final Item DEEPSLATE_TILE_SLAB;
+    public static final Item SCAFFOLDING;
+    public static final Item REDSTONE;
+    public static final Item REDSTONE_TORCH;
+    public static final Item REDSTONE_BLOCK;
+    public static final Item REPEATER;
+@@ -754,10 +760,11 @@
+    public static final Item TROPICAL_FISH;
+    public static final Item PUFFERFISH;
+    public static final Item COOKED_COD;
+    public static final Item COOKED_SALMON;
+    public static final Item INK_SAC;
++   public static final Item GLOW_INK_SAC;
+    public static final Item COCOA_BEANS;
+    public static final Item LAPIS_LAZULI;
+    public static final Item WHITE_DYE;
+    public static final Item ORANGE_DYE;
+    public static final Item MAGENTA_DYE;
+@@ -1093,11 +1100,10 @@
+    public static final Item WAXED_EXPOSED_CUT_COPPER_SLAB;
+    public static final Item WAXED_WEATHERED_CUT_COPPER_SLAB;
+    public static final Item POWDER_SNOW_BUCKET;
+    public static final Item POINTED_DRIPSTONE;
+    public static final Item DRIPSTONE_BLOCK;
+-   public static final Item GLOW_INK_SAC;
+ 
+    private static Item registerBlock(Block var0) {
+       return registerBlock(new BlockItem(var0, new Item.Properties()));
+    }
+ 
+@@ -1167,11 +1173,13 @@
+       GOLD_ORE = registerBlock(Blocks.GOLD_ORE, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       DEEPSLATE_GOLD_ORE = registerBlock(Blocks.DEEPSLATE_GOLD_ORE, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       IRON_ORE = registerBlock(Blocks.IRON_ORE, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       DEEPSLATE_IRON_ORE = registerBlock(Blocks.DEEPSLATE_IRON_ORE, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       COPPER_ORE = registerBlock(Blocks.COPPER_ORE, CreativeModeTab.TAB_BUILDING_BLOCKS);
++      DEEPSLATE_COPPER_ORE = registerBlock(Blocks.DEEPSLATE_COPPER_ORE, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       COAL_ORE = registerBlock(Blocks.COAL_ORE, CreativeModeTab.TAB_BUILDING_BLOCKS);
++      DEEPSLATE_COAL_ORE = registerBlock(Blocks.DEEPSLATE_COAL_ORE, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       NETHER_GOLD_ORE = registerBlock(Blocks.NETHER_GOLD_ORE, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       OAK_LOG = registerBlock(Blocks.OAK_LOG, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       SPRUCE_LOG = registerBlock(Blocks.SPRUCE_LOG, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       BIRCH_LOG = registerBlock(Blocks.BIRCH_LOG, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       JUNGLE_LOG = registerBlock(Blocks.JUNGLE_LOG, CreativeModeTab.TAB_BUILDING_BLOCKS);
+@@ -1363,15 +1371,18 @@
+       INFESTED_COBBLESTONE = registerBlock(Blocks.INFESTED_COBBLESTONE, CreativeModeTab.TAB_DECORATIONS);
+       INFESTED_STONE_BRICKS = registerBlock(Blocks.INFESTED_STONE_BRICKS, CreativeModeTab.TAB_DECORATIONS);
+       INFESTED_MOSSY_STONE_BRICKS = registerBlock(Blocks.INFESTED_MOSSY_STONE_BRICKS, CreativeModeTab.TAB_DECORATIONS);
+       INFESTED_CRACKED_STONE_BRICKS = registerBlock(Blocks.INFESTED_CRACKED_STONE_BRICKS, CreativeModeTab.TAB_DECORATIONS);
+       INFESTED_CHISELED_STONE_BRICKS = registerBlock(Blocks.INFESTED_CHISELED_STONE_BRICKS, CreativeModeTab.TAB_DECORATIONS);
++      INFESTED_DEEPSLATE = registerBlock(Blocks.INFESTED_DEEPSLATE, CreativeModeTab.TAB_DECORATIONS);
+       STONE_BRICKS = registerBlock(Blocks.STONE_BRICKS, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       MOSSY_STONE_BRICKS = registerBlock(Blocks.MOSSY_STONE_BRICKS, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       CRACKED_STONE_BRICKS = registerBlock(Blocks.CRACKED_STONE_BRICKS, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       CHISELED_STONE_BRICKS = registerBlock(Blocks.CHISELED_STONE_BRICKS, CreativeModeTab.TAB_BUILDING_BLOCKS);
++      CRACKED_DEEPSLATE_BRICKS = registerBlock(Blocks.CRACKED_DEEPSLATE_BRICKS, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       DEEPSLATE_BRICKS = registerBlock(Blocks.DEEPSLATE_BRICKS, CreativeModeTab.TAB_BUILDING_BLOCKS);
++      CRACKED_DEEPSLATE_TILES = registerBlock(Blocks.CRACKED_DEEPSLATE_TILES, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       DEEPSLATE_TILES = registerBlock(Blocks.DEEPSLATE_TILES, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       CHISELED_DEEPSLATE = registerBlock(Blocks.CHISELED_DEEPSLATE, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       BROWN_MUSHROOM_BLOCK = registerBlock(Blocks.BROWN_MUSHROOM_BLOCK, CreativeModeTab.TAB_DECORATIONS);
+       RED_MUSHROOM_BLOCK = registerBlock(Blocks.RED_MUSHROOM_BLOCK, CreativeModeTab.TAB_DECORATIONS);
+       MUSHROOM_STEM = registerBlock(Blocks.MUSHROOM_STEM, CreativeModeTab.TAB_DECORATIONS);
+@@ -1395,10 +1406,11 @@
+       END_STONE = registerBlock(Blocks.END_STONE, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       END_STONE_BRICKS = registerBlock(Blocks.END_STONE_BRICKS, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       DRAGON_EGG = registerBlock(new BlockItem(Blocks.DRAGON_EGG, (new Item.Properties()).rarity(Rarity.EPIC)));
+       SANDSTONE_STAIRS = registerBlock(Blocks.SANDSTONE_STAIRS, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       EMERALD_ORE = registerBlock(Blocks.EMERALD_ORE, CreativeModeTab.TAB_BUILDING_BLOCKS);
++      DEEPSLATE_EMERALD_ORE = registerBlock(Blocks.DEEPSLATE_EMERALD_ORE, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       ENDER_CHEST = registerBlock(Blocks.ENDER_CHEST, CreativeModeTab.TAB_DECORATIONS);
+       EMERALD_BLOCK = registerBlock(Blocks.EMERALD_BLOCK, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       SPRUCE_STAIRS = registerBlock(Blocks.SPRUCE_STAIRS, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       BIRCH_STAIRS = registerBlock(Blocks.BIRCH_STAIRS, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       JUNGLE_STAIRS = registerBlock(Blocks.JUNGLE_STAIRS, CreativeModeTab.TAB_BUILDING_BLOCKS);
+@@ -1423,12 +1435,12 @@
+       BLACKSTONE_WALL = registerBlock(Blocks.BLACKSTONE_WALL, CreativeModeTab.TAB_DECORATIONS);
+       POLISHED_BLACKSTONE_WALL = registerBlock(Blocks.POLISHED_BLACKSTONE_WALL, CreativeModeTab.TAB_DECORATIONS);
+       POLISHED_BLACKSTONE_BRICK_WALL = registerBlock(Blocks.POLISHED_BLACKSTONE_BRICK_WALL, CreativeModeTab.TAB_DECORATIONS);
+       COBBLED_DEEPSLATE_WALL = registerBlock(Blocks.COBBLED_DEEPSLATE_WALL, CreativeModeTab.TAB_DECORATIONS);
+       POLISHED_DEEPSLATE_WALL = registerBlock(Blocks.POLISHED_DEEPSLATE_WALL, CreativeModeTab.TAB_DECORATIONS);
+-      DEEPSLATE_TILE_WALL = registerBlock(Blocks.DEEPSLATE_TILE_WALL, CreativeModeTab.TAB_DECORATIONS);
+       DEEPSLATE_BRICK_WALL = registerBlock(Blocks.DEEPSLATE_BRICK_WALL, CreativeModeTab.TAB_DECORATIONS);
++      DEEPSLATE_TILE_WALL = registerBlock(Blocks.DEEPSLATE_TILE_WALL, CreativeModeTab.TAB_DECORATIONS);
+       ANVIL = registerBlock(Blocks.ANVIL, CreativeModeTab.TAB_DECORATIONS);
+       CHIPPED_ANVIL = registerBlock(Blocks.CHIPPED_ANVIL, CreativeModeTab.TAB_DECORATIONS);
+       DAMAGED_ANVIL = registerBlock(Blocks.DAMAGED_ANVIL, CreativeModeTab.TAB_DECORATIONS);
+       NETHER_QUARTZ_ORE = registerBlock(Blocks.NETHER_QUARTZ_ORE, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       CHISELED_QUARTZ_BLOCK = registerBlock(Blocks.CHISELED_QUARTZ_BLOCK, CreativeModeTab.TAB_BUILDING_BLOCKS);
+@@ -1652,23 +1664,23 @@
+       DEEPSLATE_BRICK_STAIRS = registerBlock(Blocks.DEEPSLATE_BRICK_STAIRS, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       POLISHED_GRANITE_SLAB = registerBlock(Blocks.POLISHED_GRANITE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       SMOOTH_RED_SANDSTONE_SLAB = registerBlock(Blocks.SMOOTH_RED_SANDSTONE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       MOSSY_STONE_BRICK_SLAB = registerBlock(Blocks.MOSSY_STONE_BRICK_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       POLISHED_DIORITE_SLAB = registerBlock(Blocks.POLISHED_DIORITE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+-      POLISHED_DEEPSLATE_SLAB = registerBlock(Blocks.POLISHED_DEEPSLATE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       MOSSY_COBBLESTONE_SLAB = registerBlock(Blocks.MOSSY_COBBLESTONE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       END_STONE_BRICK_SLAB = registerBlock(Blocks.END_STONE_BRICK_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       SMOOTH_SANDSTONE_SLAB = registerBlock(Blocks.SMOOTH_SANDSTONE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       SMOOTH_QUARTZ_SLAB = registerBlock(Blocks.SMOOTH_QUARTZ_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       GRANITE_SLAB = registerBlock(Blocks.GRANITE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       ANDESITE_SLAB = registerBlock(Blocks.ANDESITE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       RED_NETHER_BRICK_SLAB = registerBlock(Blocks.RED_NETHER_BRICK_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       POLISHED_ANDESITE_SLAB = registerBlock(Blocks.POLISHED_ANDESITE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       DIORITE_SLAB = registerBlock(Blocks.DIORITE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       COBBLED_DEEPSLATE_SLAB = registerBlock(Blocks.COBBLED_DEEPSLATE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+-      DEEPSLATE_TILE_SLAB = registerBlock(Blocks.DEEPSLATE_TILE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
++      POLISHED_DEEPSLATE_SLAB = registerBlock(Blocks.POLISHED_DEEPSLATE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       DEEPSLATE_BRICK_SLAB = registerBlock(Blocks.DEEPSLATE_BRICK_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
++      DEEPSLATE_TILE_SLAB = registerBlock(Blocks.DEEPSLATE_TILE_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       SCAFFOLDING = registerBlock((BlockItem)(new ScaffoldingBlockItem(Blocks.SCAFFOLDING, (new Item.Properties()).tab(CreativeModeTab.TAB_DECORATIONS))));
+       REDSTONE = registerItem((String)"redstone", new ItemNameBlockItem(Blocks.REDSTONE_WIRE, (new Item.Properties()).tab(CreativeModeTab.TAB_REDSTONE)));
+       REDSTONE_TORCH = registerBlock((BlockItem)(new StandingAndWallBlockItem(Blocks.REDSTONE_TORCH, Blocks.REDSTONE_WALL_TORCH, (new Item.Properties()).tab(CreativeModeTab.TAB_REDSTONE))));
+       REDSTONE_BLOCK = registerBlock(Blocks.REDSTONE_BLOCK, CreativeModeTab.TAB_REDSTONE);
+       REPEATER = registerBlock(Blocks.REPEATER, CreativeModeTab.TAB_REDSTONE);
+@@ -1866,10 +1878,11 @@
+       TROPICAL_FISH = registerItem("tropical_fish", new Item((new Item.Properties()).tab(CreativeModeTab.TAB_FOOD).food(Foods.TROPICAL_FISH)));
+       PUFFERFISH = registerItem("pufferfish", new Item((new Item.Properties()).tab(CreativeModeTab.TAB_FOOD).food(Foods.PUFFERFISH)));
+       COOKED_COD = registerItem("cooked_cod", new Item((new Item.Properties()).tab(CreativeModeTab.TAB_FOOD).food(Foods.COOKED_COD)));
+       COOKED_SALMON = registerItem("cooked_salmon", new Item((new Item.Properties()).tab(CreativeModeTab.TAB_FOOD).food(Foods.COOKED_SALMON)));
+       INK_SAC = registerItem("ink_sac", new Item((new Item.Properties()).tab(CreativeModeTab.TAB_MATERIALS)));
++      GLOW_INK_SAC = registerItem("glow_ink_sac", new Item((new Item.Properties()).tab(CreativeModeTab.TAB_MATERIALS)));
+       COCOA_BEANS = registerItem((String)"cocoa_beans", new ItemNameBlockItem(Blocks.COCOA, (new Item.Properties()).tab(CreativeModeTab.TAB_MATERIALS)));
+       LAPIS_LAZULI = registerItem("lapis_lazuli", new Item((new Item.Properties()).tab(CreativeModeTab.TAB_MATERIALS)));
+       WHITE_DYE = registerItem((String)"white_dye", new DyeItem(DyeColor.WHITE, (new Item.Properties()).tab(CreativeModeTab.TAB_MATERIALS)));
+       ORANGE_DYE = registerItem((String)"orange_dye", new DyeItem(DyeColor.ORANGE, (new Item.Properties()).tab(CreativeModeTab.TAB_MATERIALS)));
+       MAGENTA_DYE = registerItem((String)"magenta_dye", new DyeItem(DyeColor.MAGENTA, (new Item.Properties()).tab(CreativeModeTab.TAB_MATERIALS)));
+@@ -2205,8 +2218,7 @@
+       WAXED_EXPOSED_CUT_COPPER_SLAB = registerBlock(Blocks.WAXED_EXPOSED_CUT_COPPER_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       WAXED_WEATHERED_CUT_COPPER_SLAB = registerBlock(Blocks.WAXED_WEATHERED_CUT_COPPER_SLAB, CreativeModeTab.TAB_BUILDING_BLOCKS);
+       POWDER_SNOW_BUCKET = registerItem((String)"powder_snow_bucket", new SolidBucketItem(Blocks.POWDER_SNOW, SoundEvents.BUCKET_EMPTY_POWDER_SNOW, (new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_MISC)));
+       POINTED_DRIPSTONE = registerBlock(Blocks.POINTED_DRIPSTONE, CreativeModeTab.TAB_DECORATIONS);
+       DRIPSTONE_BLOCK = registerBlock(Blocks.DRIPSTONE_BLOCK, CreativeModeTab.TAB_BUILDING_BLOCKS);
+-      GLOW_INK_SAC = registerItem("glow_ink_sac", new Item((new Item.Properties()).tab(CreativeModeTab.TAB_MATERIALS)));
+    }
+ }

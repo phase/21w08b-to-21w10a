@@ -1,0 +1,32 @@
+--- net/minecraft/world/level/biome/Biome.java
++++ net/minecraft/world/level/biome/Biome.java
+@@ -234,12 +234,13 @@
+                int var17 = SectionPos.sectionToBlockCoord(var15);
+                int var18 = SectionPos.sectionToBlockCoord(var16);
+ 
+                try {
+                   int var19 = var3.getMinBuildHeight() + 1;
+-                  var1.startsForFeature(SectionPos.of(var7), var14).forEach((var9x) -> {
+-                     var9x.placeInChunk(var3, var1, var2, var6, new BoundingBox(var17, var19, var18, var17 + 15, var3.getMaxBuildHeight() - 1, var18 + 15), new ChunkPos(var15, var16));
++                  int var27 = var3.getMaxBuildHeight() - 1;
++                  var1.startsForFeature(SectionPos.of(var7), var14).forEach((var10x) -> {
++                     var10x.placeInChunk(var3, var1, var2, var6, new BoundingBox(var17, var19, var18, var17 + 15, var27, var18 + 15), new ChunkPos(var15, var16));
+                   });
+                } catch (Exception var21) {
+                   CrashReport var20 = CrashReport.forThrowable(var21, "Feature placement");
+                   var20.addCategory("Feature").setDetail("Id", (Object)Registry.STRUCTURE_FEATURE.getKey(var14)).setDetail("Description", () -> {
+                      return var14.toString();
+@@ -633,11 +634,12 @@
+       OCEAN("ocean"),
+       DESERT("desert"),
+       RIVER("river"),
+       SWAMP("swamp"),
+       MUSHROOM("mushroom"),
+-      NETHER("nether");
++      NETHER("nether"),
++      UNDERGROUND("underground");
+ 
+       public static final Codec<Biome.BiomeCategory> CODEC = StringRepresentable.fromEnum(Biome.BiomeCategory::values, Biome.BiomeCategory::byName);
+       private static final Map<String, Biome.BiomeCategory> BY_NAME = (Map)Arrays.stream(values()).collect(Collectors.toMap(Biome.BiomeCategory::getName, (var0) -> {
+          return var0;
+       }));

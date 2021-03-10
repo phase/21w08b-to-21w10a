@@ -1,0 +1,15 @@
+--- net/minecraft/world/entity/animal/axolotl/Axolotl.java
++++ net/minecraft/world/entity/animal/axolotl/Axolotl.java
+@@ -188,11 +188,11 @@
+    public void setFromBucket(boolean var1) {
+       this.entityData.set(FROM_BUCKET, var1);
+    }
+ 
+    public double getVisibilityPercent(@Nullable Entity var1) {
+-      return this.isPlayingDead() ? 0.0D : 1.0D;
++      return this.isPlayingDead() ? 0.0D : super.getVisibilityPercent(var1);
+    }
+ 
+    @Nullable
+    public AgeableMob getBreedOffspring(ServerLevel var1, AgeableMob var2) {
+       Axolotl var3 = (Axolotl)EntityType.AXOLOTL.create(var1);

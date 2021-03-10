@@ -1,0 +1,53 @@
+--- net/minecraft/client/gui/screens/inventory/BookViewScreen.java
++++ net/minecraft/client/gui/screens/inventory/BookViewScreen.java
+@@ -13,10 +13,11 @@
+ import net.minecraft.client.Minecraft;
+ import net.minecraft.client.gui.Font;
+ import net.minecraft.client.gui.chat.NarratorChatListener;
+ import net.minecraft.client.gui.components.Button;
+ import net.minecraft.client.gui.screens.Screen;
++import net.minecraft.client.renderer.GameRenderer;
+ import net.minecraft.nbt.CompoundTag;
+ import net.minecraft.nbt.ListTag;
+ import net.minecraft.network.chat.ClickEvent;
+ import net.minecraft.network.chat.CommonComponents;
+ import net.minecraft.network.chat.Component;
+@@ -157,12 +158,13 @@
+       }
+    }
+ 
+    public void render(PoseStack var1, int var2, int var3, float var4) {
+       this.renderBackground(var1);
+-      RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+-      this.minecraft.getTextureManager().bind(BOOK_LOCATION);
++      RenderSystem.setShader(GameRenderer::getPositionTexShader);
++      RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
++      RenderSystem.setShaderTexture(0, BOOK_LOCATION);
+       int var5 = (this.width - 192) / 2;
+       boolean var6 = true;
+       this.blit(var1, var5, 2, 0, 0, 192, 192);
+       if (this.cachedPage != this.currentPage) {
+          FormattedText var7 = this.bookAccess.getPage(this.currentPage);
+@@ -217,17 +219,21 @@
+             return false;
+          }
+       } else {
+          boolean var3 = super.handleComponentClicked(var1);
+          if (var3 && var2.getAction() == ClickEvent.Action.RUN_COMMAND) {
+-            this.minecraft.setScreen((Screen)null);
++            this.closeScreen();
+          }
+ 
+          return var3;
+       }
+    }
+ 
++   protected void closeScreen() {
++      this.minecraft.setScreen((Screen)null);
++   }
++
+    @Nullable
+    public Style getClickedComponentStyleAt(double var1, double var3) {
+       if (this.cachedPageComponents.isEmpty()) {
+          return null;
+       } else {

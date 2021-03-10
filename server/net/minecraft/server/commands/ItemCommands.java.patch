@@ -1,0 +1,46 @@
+--- net/minecraft/server/commands/ItemCommands.java
++++ net/minecraft/server/commands/ItemCommands.java
+@@ -113,21 +113,17 @@
+       HashMap var4 = Maps.newHashMapWithExpectedSize(var1.size());
+       Iterator var5 = var1.iterator();
+ 
+       while(var5.hasNext()) {
+          Entity var6 = (Entity)var5.next();
+-         if (var6 instanceof ServerPlayer) {
+-            ((ServerPlayer)var6).inventoryMenu.broadcastChanges();
+-         }
+-
+          SlotAccess var7 = var6.getSlot(var2);
+          if (var7 != SlotAccess.NULL) {
+             ItemStack var8 = applyModifier(var0, var3, var7.get().copy());
+             if (var7.set(var8)) {
+                var4.put(var6, var8);
+                if (var6 instanceof ServerPlayer) {
+-                  ((ServerPlayer)var6).inventoryMenu.broadcastChanges();
++                  ((ServerPlayer)var6).containerMenu.broadcastChanges();
+                }
+             }
+          }
+       }
+ 
+@@ -169,19 +165,15 @@
+       ArrayList var4 = Lists.newArrayListWithCapacity(var1.size());
+       Iterator var5 = var1.iterator();
+ 
+       while(var5.hasNext()) {
+          Entity var6 = (Entity)var5.next();
+-         if (var6 instanceof ServerPlayer) {
+-            ((ServerPlayer)var6).inventoryMenu.broadcastChanges();
+-         }
+-
+          SlotAccess var7 = var6.getSlot(var2);
+          if (var7 != SlotAccess.NULL && var7.set(var3.copy())) {
+             var4.add(var6);
+             if (var6 instanceof ServerPlayer) {
+-               ((ServerPlayer)var6).inventoryMenu.broadcastChanges();
++               ((ServerPlayer)var6).containerMenu.broadcastChanges();
+             }
+          }
+       }
+ 
+       if (var4.isEmpty()) {

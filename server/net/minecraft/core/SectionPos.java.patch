@@ -1,0 +1,17 @@
+--- net/minecraft/core/SectionPos.java
++++ net/minecraft/core/SectionPos.java
+@@ -184,10 +184,14 @@
+ 
+    public long asLong() {
+       return asLong(this.x(), this.y(), this.z());
+    }
+ 
++   public SectionPos offset(int var1, int var2, int var3) {
++      return var1 == 0 && var2 == 0 && var3 == 0 ? this : new SectionPos(this.x() + var1, this.y() + var2, this.z() + var3);
++   }
++
+    public Stream<BlockPos> blocksInside() {
+       return BlockPos.betweenClosedStream(this.minBlockX(), this.minBlockY(), this.minBlockZ(), this.maxBlockX(), this.maxBlockY(), this.maxBlockZ());
+    }
+ 
+    public static Stream<SectionPos> cube(SectionPos var0, int var1) {

@@ -1,0 +1,92 @@
+--- net/minecraft/server/level/ServerLevel.java
++++ net/minecraft/server/level/ServerLevel.java
+@@ -1183,12 +1183,12 @@
+       } finally {
+          if (var3 != null) {
+             if (var4 != null) {
+                try {
+                   var3.close();
+-               } catch (Throwable var151) {
+-                  var4.addSuppressed(var151);
++               } catch (Throwable var150) {
++                  var4.addSuppressed(var150);
+                }
+             } else {
+                var3.close();
+             }
+          }
+@@ -1208,12 +1208,12 @@
+       } finally {
+          if (var168 != null) {
+             if (var169 != null) {
+                try {
+                   var168.close();
+-               } catch (Throwable var152) {
+-                  var169.addSuppressed(var152);
++               } catch (Throwable var151) {
++                  var169.addSuppressed(var151);
+                }
+             } else {
+                var168.close();
+             }
+          }
+@@ -1232,12 +1232,12 @@
+       } finally {
+          if (var171 != null) {
+             if (var172 != null) {
+                try {
+                   var171.close();
+-               } catch (Throwable var150) {
+-                  var172.addSuppressed(var150);
++               } catch (Throwable var152) {
++                  var172.addSuppressed(var152);
+                }
+             } else {
+                var171.close();
+             }
+          }
+@@ -1256,12 +1256,12 @@
+       } finally {
+          if (var174 != null) {
+             if (var175 != null) {
+                try {
+                   var174.close();
+-               } catch (Throwable var149) {
+-                  var175.addSuppressed(var149);
++               } catch (Throwable var154) {
++                  var175.addSuppressed(var154);
+                }
+             } else {
+                var174.close();
+             }
+          }
+@@ -1280,12 +1280,12 @@
+       } finally {
+          if (var177 != null) {
+             if (var8 != null) {
+                try {
+                   var177.close();
+-               } catch (Throwable var153) {
+-                  var8.addSuppressed(var153);
++               } catch (Throwable var149) {
++                  var8.addSuppressed(var149);
+                }
+             } else {
+                var177.close();
+             }
+          }
+@@ -1304,12 +1304,12 @@
+       } finally {
+          if (var179 != null) {
+             if (var9 != null) {
+                try {
+                   var179.close();
+-               } catch (Throwable var154) {
+-                  var9.addSuppressed(var154);
++               } catch (Throwable var153) {
++                  var9.addSuppressed(var153);
+                }
+             } else {
+                var179.close();
+             }
+          }

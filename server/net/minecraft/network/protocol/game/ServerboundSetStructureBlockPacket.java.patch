@@ -1,0 +1,51 @@
+--- net/minecraft/network/protocol/game/ServerboundSetStructureBlockPacket.java
++++ net/minecraft/network/protocol/game/ServerboundSetStructureBlockPacket.java
+@@ -1,8 +1,9 @@
+ package net.minecraft.network.protocol.game;
+ 
+ import net.minecraft.core.BlockPos;
++import net.minecraft.core.Vec3i;
+ import net.minecraft.network.FriendlyByteBuf;
+ import net.minecraft.network.protocol.Packet;
+ import net.minecraft.util.Mth;
+ import net.minecraft.world.level.block.Mirror;
+ import net.minecraft.world.level.block.Rotation;
+@@ -13,11 +14,11 @@
+    private final BlockPos pos;
+    private final StructureBlockEntity.UpdateType updateType;
+    private final StructureMode mode;
+    private final String name;
+    private final BlockPos offset;
+-   private final BlockPos size;
++   private final Vec3i size;
+    private final Mirror mirror;
+    private final Rotation rotation;
+    private final String data;
+    private final boolean ignoreEntities;
+    private final boolean showAir;
+@@ -31,11 +32,11 @@
+       this.mode = (StructureMode)var1.readEnum(StructureMode.class);
+       this.name = var1.readUtf();
+       boolean var2 = true;
+       this.offset = new BlockPos(Mth.clamp(var1.readByte(), -48, 48), Mth.clamp(var1.readByte(), -48, 48), Mth.clamp(var1.readByte(), -48, 48));
+       boolean var3 = true;
+-      this.size = new BlockPos(Mth.clamp(var1.readByte(), 0, 48), Mth.clamp(var1.readByte(), 0, 48), Mth.clamp(var1.readByte(), 0, 48));
++      this.size = new Vec3i(Mth.clamp(var1.readByte(), 0, 48), Mth.clamp(var1.readByte(), 0, 48), Mth.clamp(var1.readByte(), 0, 48));
+       this.mirror = (Mirror)var1.readEnum(Mirror.class);
+       this.rotation = (Rotation)var1.readEnum(Rotation.class);
+       this.data = var1.readUtf(12);
+       this.integrity = Mth.clamp(var1.readFloat(), 0.0F, 1.0F);
+       this.seed = var1.readVarLong();
+@@ -99,11 +100,11 @@
+ 
+    public BlockPos getOffset() {
+       return this.offset;
+    }
+ 
+-   public BlockPos getSize() {
++   public Vec3i getSize() {
+       return this.size;
+    }
+ 
+    public Mirror getMirror() {
+       return this.mirror;

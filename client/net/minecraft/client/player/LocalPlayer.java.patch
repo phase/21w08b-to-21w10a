@@ -1,0 +1,14 @@
+--- net/minecraft/client/player/LocalPlayer.java
++++ net/minecraft/client/player/LocalPlayer.java
+@@ -293,11 +293,10 @@
+       this.connection.send((Packet)(new ServerboundContainerClosePacket(this.containerMenu.containerId)));
+       this.clientSideCloseContainer();
+    }
+ 
+    public void clientSideCloseContainer() {
+-      this.getInventory().setCarried(ItemStack.EMPTY);
+       super.closeContainer();
+       this.minecraft.setScreen((Screen)null);
+    }
+ 
+    public void hurtTo(float var1) {

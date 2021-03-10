@@ -1,0 +1,32 @@
+--- net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
++++ net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
+@@ -236,11 +236,15 @@
+       if (var3.isLit()) {
+          --var3.litTime;
+       }
+ 
+       ItemStack var6 = (ItemStack)var3.items.get(1);
+-      if (var3.isLit() || !var6.isEmpty() && !((ItemStack)var3.items.get(0)).isEmpty()) {
++      if (!var3.isLit() && (var6.isEmpty() || ((ItemStack)var3.items.get(0)).isEmpty())) {
++         if (!var3.isLit() && var3.cookingProgress > 0) {
++            var3.cookingProgress = Mth.clamp(var3.cookingProgress - 2, 0, var3.cookingTotalTime);
++         }
++      } else {
+          Recipe var7 = (Recipe)var0.getRecipeManager().getRecipeFor(var3.recipeType, var3, var0).orElse((Object)null);
+          int var8 = var3.getMaxStackSize();
+          if (!var3.isLit() && canBurn(var7, var3.items, var8)) {
+             var3.litTime = var3.getBurnDuration(var6);
+             var3.litDuration = var3.litTime;
+@@ -269,12 +273,10 @@
+                var5 = true;
+             }
+          } else {
+             var3.cookingProgress = 0;
+          }
+-      } else if (!var3.isLit() && var3.cookingProgress > 0) {
+-         var3.cookingProgress = Mth.clamp(var3.cookingProgress - 2, 0, var3.cookingTotalTime);
+       }
+ 
+       if (var4 != var3.isLit()) {
+          var5 = true;
+          var2 = (BlockState)var2.setValue(AbstractFurnaceBlock.LIT, var3.isLit());

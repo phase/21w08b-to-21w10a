@@ -1,0 +1,59 @@
+--- net/minecraft/data/loot/BlockLoot.java
++++ net/minecraft/data/loot/BlockLoot.java
+@@ -659,10 +659,11 @@
+       this.dropSelf(Blocks.COPPER_BLOCK);
+       this.dropSelf(Blocks.EXPOSED_COPPER);
+       this.dropSelf(Blocks.WEATHERED_COPPER);
+       this.dropSelf(Blocks.OXIDIZED_COPPER);
+       this.dropSelf(Blocks.COPPER_ORE);
++      this.dropSelf(Blocks.DEEPSLATE_COPPER_ORE);
+       this.dropSelf(Blocks.CUT_COPPER);
+       this.dropSelf(Blocks.EXPOSED_CUT_COPPER);
+       this.dropSelf(Blocks.WEATHERED_CUT_COPPER);
+       this.dropSelf(Blocks.OXIDIZED_CUT_COPPER);
+       this.dropSelf(Blocks.WAXED_COPPER_BLOCK);
+@@ -699,10 +700,12 @@
+       this.dropSelf(Blocks.DEEPSLATE_TILE_WALL);
+       this.dropSelf(Blocks.DEEPSLATE_BRICKS);
+       this.dropSelf(Blocks.DEEPSLATE_BRICK_STAIRS);
+       this.dropSelf(Blocks.DEEPSLATE_BRICK_WALL);
+       this.dropSelf(Blocks.CHISELED_DEEPSLATE);
++      this.dropSelf(Blocks.CRACKED_DEEPSLATE_BRICKS);
++      this.dropSelf(Blocks.CRACKED_DEEPSLATE_TILES);
+       this.dropOther(Blocks.FARMLAND, Blocks.DIRT);
+       this.dropOther(Blocks.TRIPWIRE, Items.STRING);
+       this.dropOther(Blocks.DIRT_PATH, Blocks.DIRT);
+       this.dropOther(Blocks.KELP_PLANT, Blocks.KELP);
+       this.dropOther(Blocks.BAMBOO_SAPLING, Blocks.BAMBOO);
+@@ -1037,13 +1040,19 @@
+          return createMushroomBlockDrop(var0, Blocks.RED_MUSHROOM);
+       });
+       this.add(Blocks.COAL_ORE, (var0) -> {
+          return createOreDrop(var0, Items.COAL);
+       });
++      this.add(Blocks.DEEPSLATE_COAL_ORE, (var0) -> {
++         return createOreDrop(var0, Items.COAL);
++      });
+       this.add(Blocks.EMERALD_ORE, (var0) -> {
+          return createOreDrop(var0, Items.EMERALD);
+       });
++      this.add(Blocks.DEEPSLATE_EMERALD_ORE, (var0) -> {
++         return createOreDrop(var0, Items.EMERALD);
++      });
+       this.add(Blocks.NETHER_QUARTZ_ORE, (var0) -> {
+          return createOreDrop(var0, Items.QUARTZ);
+       });
+       this.add(Blocks.DIAMOND_ORE, (var0) -> {
+          return createOreDrop(var0, Items.DIAMOND);
+@@ -1190,10 +1199,11 @@
+       this.otherWhenSilkTouch(Blocks.INFESTED_COBBLESTONE, Blocks.COBBLESTONE);
+       this.otherWhenSilkTouch(Blocks.INFESTED_STONE_BRICKS, Blocks.STONE_BRICKS);
+       this.otherWhenSilkTouch(Blocks.INFESTED_MOSSY_STONE_BRICKS, Blocks.MOSSY_STONE_BRICKS);
+       this.otherWhenSilkTouch(Blocks.INFESTED_CRACKED_STONE_BRICKS, Blocks.CRACKED_STONE_BRICKS);
+       this.otherWhenSilkTouch(Blocks.INFESTED_CHISELED_STONE_BRICKS, Blocks.CHISELED_STONE_BRICKS);
++      this.otherWhenSilkTouch(Blocks.INFESTED_DEEPSLATE, Blocks.DEEPSLATE);
+       this.addNetherVinesDropTable(Blocks.WEEPING_VINES, Blocks.WEEPING_VINES_PLANT);
+       this.addNetherVinesDropTable(Blocks.TWISTING_VINES, Blocks.TWISTING_VINES_PLANT);
+       this.add(Blocks.CAKE, noDrop());
+       this.add(Blocks.CANDLE_CAKE, createCandleCakeDrops(Blocks.CANDLE));
+       this.add(Blocks.WHITE_CANDLE_CAKE, createCandleCakeDrops(Blocks.WHITE_CANDLE));

@@ -1,0 +1,17 @@
+--- net/minecraft/core/Vec3i.java
++++ net/minecraft/core/Vec3i.java
+@@ -79,10 +79,14 @@
+    protected Vec3i setZ(int var1) {
+       this.z = var1;
+       return this;
+    }
+ 
++   public Vec3i offset(int var1, int var2, int var3) {
++      return var1 == 0 && var2 == 0 && var3 == 0 ? this : new Vec3i(this.getX() + var1, this.getY() + var2, this.getZ() + var3);
++   }
++
+    public Vec3i above() {
+       return this.above(1);
+    }
+ 
+    public Vec3i above(int var1) {

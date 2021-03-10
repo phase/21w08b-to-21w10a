@@ -1,0 +1,42 @@
+--- net/minecraft/world/level/block/BigDripleafBlock.java
++++ net/minecraft/world/level/block/BigDripleafBlock.java
+@@ -19,10 +19,11 @@
+ import net.minecraft.world.entity.projectile.Projectile;
+ import net.minecraft.world.item.context.BlockPlaceContext;
+ import net.minecraft.world.level.BlockGetter;
+ import net.minecraft.world.level.Level;
+ import net.minecraft.world.level.LevelAccessor;
++import net.minecraft.world.level.LevelHeightAccessor;
+ import net.minecraft.world.level.LevelReader;
+ import net.minecraft.world.level.block.state.BlockBehaviour;
+ import net.minecraft.world.level.block.state.BlockState;
+ import net.minecraft.world.level.block.state.StateDefinition;
+ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+@@ -61,11 +62,11 @@
+ 
+    private static VoxelShape getLeafShape(BlockState var0) {
+       return (VoxelShape)LEAF_SHAPES.get(var0.getValue(TILT));
+    }
+ 
+-   protected static void placeWithRandomHeight(Level var0, Random var1, BlockPos var2) {
++   public static void placeWithRandomHeight(LevelAccessor var0, Random var1, BlockPos var2) {
+       int var3 = 1 + var1.nextInt(5);
+       Direction var4 = Direction.Plane.HORIZONTAL.getRandomDirection(var1);
+       BlockPos.MutableBlockPos var5 = var2.mutable();
+       int var6 = 0;
+ 
+@@ -87,12 +88,12 @@
+ 
+    private static boolean canReplace(BlockState var0) {
+       return var0.isAir() || var0.is(Blocks.WATER) || var0.is(Blocks.SMALL_DRIPLEAF);
+    }
+ 
+-   private static boolean canPlaceAt(Level var0, BlockPos var1, BlockState var2) {
+-      return var0.isInWorldBounds(var1) && canReplace(var2);
++   private static boolean canPlaceAt(LevelHeightAccessor var0, BlockPos var1, BlockState var2) {
++      return !var0.isOutsideBuildHeight(var1) && canReplace(var2);
+    }
+ 
+    protected static boolean place(LevelAccessor var0, BlockPos var1, FluidState var2, Direction var3) {
+       BlockState var4 = (BlockState)((BlockState)Blocks.BIG_DRIPLEAF.defaultBlockState().setValue(WATERLOGGED, var2.isSourceOfType(Fluids.WATER))).setValue(FACING, var3);
+       return var0.setBlock(var1, var4, 2);

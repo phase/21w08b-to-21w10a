@@ -1,0 +1,40 @@
+--- net/minecraft/client/gui/screens/worldselection/WorldSelectionList.java
++++ net/minecraft/client/gui/screens/worldselection/WorldSelectionList.java
+@@ -35,10 +35,11 @@
+ import net.minecraft.client.gui.screens.ConfirmScreen;
+ import net.minecraft.client.gui.screens.ErrorScreen;
+ import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
+ import net.minecraft.client.gui.screens.ProgressScreen;
+ import net.minecraft.client.gui.screens.Screen;
++import net.minecraft.client.renderer.GameRenderer;
+ import net.minecraft.client.renderer.texture.AbstractTexture;
+ import net.minecraft.client.renderer.texture.DynamicTexture;
+ import net.minecraft.client.resources.language.I18n;
+ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+ import net.minecraft.core.RegistryAccess;
+@@ -207,19 +208,21 @@
+          var10003 = (float)(var4 + 32 + 3);
+          this.minecraft.font.getClass();
+          int var10004 = var3 + 9;
+          this.minecraft.font.getClass();
+          var10000.draw(var1, var13, var10003, (float)(var10004 + 9 + 3), 8421504);
+-         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+-         this.minecraft.getTextureManager().bind(this.icon != null ? this.iconLocation : WorldSelectionList.ICON_MISSING);
++         RenderSystem.setShader(GameRenderer::getPositionTexShader);
++         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
++         RenderSystem.setShaderTexture(0, this.icon != null ? this.iconLocation : WorldSelectionList.ICON_MISSING);
+          RenderSystem.enableBlend();
+          GuiComponent.blit(var1, var4, var3, 0.0F, 0.0F, 32, 32, 32, 32);
+          RenderSystem.disableBlend();
+          if (this.minecraft.options.touchscreen || var9) {
+-            this.minecraft.getTextureManager().bind(WorldSelectionList.ICON_OVERLAY_LOCATION);
++            RenderSystem.setShaderTexture(0, WorldSelectionList.ICON_OVERLAY_LOCATION);
+             GuiComponent.fill(var1, var4, var3, var4 + 32, var3 + 32, -1601138544);
+-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
++            RenderSystem.setShader(GameRenderer::getPositionTexShader);
++            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+             int var14 = var7 - var4;
+             boolean var15 = var14 < 32;
+             int var16 = var15 ? 32 : 0;
+             if (this.summary.isLocked()) {
+                GuiComponent.blit(var1, var4, var3, 96.0F, (float)var16, 32, 32, 256, 256);

@@ -1,0 +1,15 @@
+--- net/minecraft/server/level/ServerPlayerGameMode.java
++++ net/minecraft/server/level/ServerPlayerGameMode.java
+@@ -281,11 +281,11 @@
+             if (var8.isEmpty()) {
+                var1.setItemInHand(var4, ItemStack.EMPTY);
+             }
+ 
+             if (!var1.isUsingItem()) {
+-               var1.refreshContainer(var1.inventoryMenu);
++               var1.inventoryMenu.sendAllDataToRemote();
+             }
+ 
+             return var7.getResult();
+          }
+       }

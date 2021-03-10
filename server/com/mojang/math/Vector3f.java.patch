@@ -1,0 +1,23 @@
+--- com/mojang/math/Vector3f.java
++++ com/mojang/math/Vector3f.java
+@@ -12,10 +12,11 @@
+    public static Vector3f XP;
+    public static Vector3f YN;
+    public static Vector3f YP;
+    public static Vector3f ZN;
+    public static Vector3f ZP;
++   public static Vector3f ZERO;
+    private float x;
+    private float y;
+    private float z;
+ 
+    public Vector3f() {
+@@ -98,7 +99,8 @@
+       XP = new Vector3f(1.0F, 0.0F, 0.0F);
+       YN = new Vector3f(0.0F, -1.0F, 0.0F);
+       YP = new Vector3f(0.0F, 1.0F, 0.0F);
+       ZN = new Vector3f(0.0F, 0.0F, -1.0F);
+       ZP = new Vector3f(0.0F, 0.0F, 1.0F);
++      ZERO = new Vector3f(0.0F, 0.0F, 0.0F);
+    }
+ }

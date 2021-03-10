@@ -1,0 +1,27 @@
+--- net/minecraft/world/entity/GlowSquid.java
++++ net/minecraft/world/entity/GlowSquid.java
+@@ -48,10 +48,11 @@
+       super.addAdditionalSaveData(var1);
+       var1.putInt("DarkTicksRemaining", this.getDarkTicksRemaining());
+    }
+ 
+    public void readAdditionalSaveData(CompoundTag var1) {
++      super.readAdditionalSaveData(var1);
+       this.setDarkTicks(var1.getInt("DarkTicksRemaining"));
+    }
+ 
+    public void aiStep() {
+       super.aiStep();
+@@ -67,11 +68,11 @@
+       boolean var3 = super.hurt(var1, var2);
+       if (var3) {
+          this.setDarkTicks(100);
+       }
+ 
+-      return false;
++      return var3;
+    }
+ 
+    private void setDarkTicks(int var1) {
+       this.entityData.set(DATA_DARK_TICKS_REMAINING, var1);
+    }

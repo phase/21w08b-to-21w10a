@@ -1,0 +1,58 @@
+--- net/minecraft/world/entity/EntityType.java
++++ net/minecraft/world/entity/EntityType.java
+@@ -59,10 +59,11 @@
+ import net.minecraft.world.entity.animal.horse.ZombieHorse;
+ import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
+ import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
+ import net.minecraft.world.entity.boss.wither.WitherBoss;
+ import net.minecraft.world.entity.decoration.ArmorStand;
++import net.minecraft.world.entity.decoration.GlowItemFrame;
+ import net.minecraft.world.entity.decoration.ItemFrame;
+ import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
+ import net.minecraft.world.entity.decoration.Painting;
+ import net.minecraft.world.entity.item.FallingBlockEntity;
+ import net.minecraft.world.entity.item.ItemEntity;
+@@ -176,11 +177,11 @@
+    public static final EntityType<FallingBlockEntity> FALLING_BLOCK;
+    public static final EntityType<FireworkRocketEntity> FIREWORK_ROCKET;
+    public static final EntityType<Fox> FOX;
+    public static final EntityType<Ghast> GHAST;
+    public static final EntityType<Giant> GIANT;
+-   public static final EntityType<ItemFrame> GLOW_ITEM_FRAME;
++   public static final EntityType<GlowItemFrame> GLOW_ITEM_FRAME;
+    public static final EntityType<GlowSquid> GLOW_SQUID;
+    public static final EntityType<Guardian> GUARDIAN;
+    public static final EntityType<Hoglin> HOGLIN;
+    public static final EntityType<Horse> HORSE;
+    public static final EntityType<Husk> HUSK;
+@@ -461,14 +462,14 @@
+    }
+ 
+    public boolean isBlockDangerous(BlockState var1) {
+       if (this.immuneTo.contains(var1.getBlock())) {
+          return false;
+-      } else if (!this.fireImmune && (var1.is(BlockTags.FIRE) || var1.is(Blocks.MAGMA_BLOCK) || CampfireBlock.isLitCampfire(var1) || var1.is(Blocks.LAVA))) {
+-         return true;
+-      } else {
++      } else if (this.fireImmune || !var1.is(BlockTags.FIRE) && !var1.is(Blocks.MAGMA_BLOCK) && !CampfireBlock.isLitCampfire(var1) && !var1.is(Blocks.LAVA)) {
+          return var1.is(Blocks.WITHER_ROSE) || var1.is(Blocks.SWEET_BERRY_BUSH) || var1.is(Blocks.CACTUS);
++      } else {
++         return true;
+       }
+    }
+ 
+    public EntityDimensions getDimensions() {
+       return this.dimensions;
+@@ -587,11 +588,11 @@
+       FALLING_BLOCK = register("falling_block", EntityType.Builder.of(FallingBlockEntity::new, MobCategory.MISC).sized(0.98F, 0.98F).clientTrackingRange(10).updateInterval(20));
+       FIREWORK_ROCKET = register("firework_rocket", EntityType.Builder.of(FireworkRocketEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
+       FOX = register("fox", EntityType.Builder.of(Fox::new, MobCategory.CREATURE).sized(0.6F, 0.7F).clientTrackingRange(8).immuneTo(Blocks.SWEET_BERRY_BUSH));
+       GHAST = register("ghast", EntityType.Builder.of(Ghast::new, MobCategory.MONSTER).fireImmune().sized(4.0F, 4.0F).clientTrackingRange(10));
+       GIANT = register("giant", EntityType.Builder.of(Giant::new, MobCategory.MONSTER).sized(3.6F, 12.0F).clientTrackingRange(10));
+-      GLOW_ITEM_FRAME = register("glow_item_frame", EntityType.Builder.of(ItemFrame::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(10).updateInterval(Integer.MAX_VALUE));
++      GLOW_ITEM_FRAME = register("glow_item_frame", EntityType.Builder.of(GlowItemFrame::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(10).updateInterval(Integer.MAX_VALUE));
+       GLOW_SQUID = register("glow_squid", EntityType.Builder.of(GlowSquid::new, MobCategory.WATER_CREATURE).sized(0.8F, 0.8F).clientTrackingRange(10));
+       GUARDIAN = register("guardian", EntityType.Builder.of(Guardian::new, MobCategory.MONSTER).sized(0.85F, 0.85F).clientTrackingRange(8));
+       HOGLIN = register("hoglin", EntityType.Builder.of(Hoglin::new, MobCategory.MONSTER).sized(1.3964844F, 1.4F).clientTrackingRange(8));
+       HORSE = register("horse", EntityType.Builder.of(Horse::new, MobCategory.CREATURE).sized(1.3964844F, 1.6F).clientTrackingRange(10));
+       HUSK = register("husk", EntityType.Builder.of(Husk::new, MobCategory.MONSTER).sized(0.6F, 1.95F).clientTrackingRange(8));

@@ -1,0 +1,15 @@
+--- net/minecraft/world/level/levelgen/carver/WorldCarver.java
++++ net/minecraft/world/level/levelgen/carver/WorldCarver.java
+@@ -121,11 +121,11 @@
+       }
+ 
+       if (!this.canReplaceBlock(var11, var12) && !isDebugEnabled(var2)) {
+          return false;
+       } else {
+-         if (var7.getY() < var1.getMinGenY() + 11 && !isDebugEnabled(var2)) {
++         if (var7.getY() < var1.getMinGenY() + 9 && !isDebugEnabled(var2)) {
+             var3.setBlockState(var7, LAVA.createLegacyBlock(), false);
+          } else {
+             var3.setBlockState(var7, getCaveAirState(var2), false);
+             if (var10.isTrue()) {
+                var8.setWithOffset(var7, Direction.DOWN);

@@ -1,0 +1,27 @@
+--- net/minecraft/world/inventory/AnvilMenu.java
++++ net/minecraft/world/inventory/AnvilMenu.java
+@@ -39,11 +39,11 @@
+ 
+    protected boolean mayPickup(Player var1, boolean var2) {
+       return (var1.getAbilities().instabuild || var1.experienceLevel >= this.cost.get()) && this.cost.get() > 0;
+    }
+ 
+-   protected ItemStack onTake(Player var1, ItemStack var2) {
++   protected void onTake(Player var1, ItemStack var2) {
+       if (!var1.getAbilities().instabuild) {
+          var1.giveExperienceLevels(-this.cost.get());
+       }
+ 
+       this.inputSlots.setItem(0, ItemStack.EMPTY);
+@@ -74,11 +74,10 @@
+          } else {
+             var1x.levelEvent(1030, var2x, 0);
+          }
+ 
+       });
+-      return var2;
+    }
+ 
+    public void createResult() {
+       ItemStack var1 = this.inputSlots.getItem(0);
+       this.cost.set(1);

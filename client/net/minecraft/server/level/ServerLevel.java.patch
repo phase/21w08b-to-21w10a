@@ -1,0 +1,32 @@
+--- net/minecraft/server/level/ServerLevel.java
++++ net/minecraft/server/level/ServerLevel.java
+@@ -1257,12 +1257,12 @@
+       } finally {
+          if (var174 != null) {
+             if (var175 != null) {
+                try {
+                   var174.close();
+-               } catch (Throwable var154) {
+-                  var175.addSuppressed(var154);
++               } catch (Throwable var152) {
++                  var175.addSuppressed(var152);
+                }
+             } else {
+                var174.close();
+             }
+          }
+@@ -1281,12 +1281,12 @@
+       } finally {
+          if (var177 != null) {
+             if (var8 != null) {
+                try {
+                   var177.close();
+-               } catch (Throwable var152) {
+-                  var8.addSuppressed(var152);
++               } catch (Throwable var154) {
++                  var8.addSuppressed(var154);
+                }
+             } else {
+                var177.close();
+             }
+          }

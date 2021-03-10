@@ -1,0 +1,29 @@
+--- net/minecraft/client/renderer/chunk/ChunkRenderDispatcher.java
++++ net/minecraft/client/renderer/chunk/ChunkRenderDispatcher.java
+@@ -54,10 +54,11 @@
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+ 
+ public class ChunkRenderDispatcher {
+    private static final Logger LOGGER = LogManager.getLogger();
++   private static final VertexFormat VERTEX_FORMAT;
+    private final PriorityQueue<ChunkRenderDispatcher.RenderChunk.ChunkCompileTask> toBatch = Queues.newPriorityQueue();
+    private final Queue<ChunkBufferBuilderPack> freeBuffers;
+    private final Queue<Runnable> toUpload = Queues.newConcurrentLinkedQueue();
+    private volatile int toBatchCount;
+    private volatile int freeBufferCount;
+@@ -208,10 +209,14 @@
+       this.clearBatchQueue();
+       this.mailbox.close();
+       this.freeBuffers.clear();
+    }
+ 
++   static {
++      VERTEX_FORMAT = DefaultVertexFormat.BLOCK;
++   }
++
+    public static class CompiledChunk {
+       public static final ChunkRenderDispatcher.CompiledChunk UNCOMPILED = new ChunkRenderDispatcher.CompiledChunk() {
+          public boolean facesCanSeeEachother(Direction var1, Direction var2) {
+             return false;
+          }

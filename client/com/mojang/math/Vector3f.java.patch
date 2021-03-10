@@ -1,0 +1,38 @@
+--- com/mojang/math/Vector3f.java
++++ com/mojang/math/Vector3f.java
+@@ -14,10 +14,11 @@
+    public static Vector3f XP;
+    public static Vector3f YN;
+    public static Vector3f YP;
+    public static Vector3f ZN;
+    public static Vector3f ZP;
++   public static Vector3f ZERO;
+    private float x;
+    private float y;
+    private float z;
+ 
+    public Vector3f() {
+@@ -27,10 +28,14 @@
+       this.x = var1;
+       this.y = var2;
+       this.z = var3;
+    }
+ 
++   public Vector3f(Vector4f var1) {
++      this(var1.x(), var1.y(), var1.z());
++   }
++
+    public Vector3f(Vec3 var1) {
+       this((float)var1.x, (float)var1.y, (float)var1.z);
+    }
+ 
+    public boolean equals(Object var1) {
+@@ -199,7 +204,8 @@
+       XP = new Vector3f(1.0F, 0.0F, 0.0F);
+       YN = new Vector3f(0.0F, -1.0F, 0.0F);
+       YP = new Vector3f(0.0F, 1.0F, 0.0F);
+       ZN = new Vector3f(0.0F, 0.0F, -1.0F);
+       ZP = new Vector3f(0.0F, 0.0F, 1.0F);
++      ZERO = new Vector3f(0.0F, 0.0F, 0.0F);
+    }
+ }

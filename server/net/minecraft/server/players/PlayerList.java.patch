@@ -1,0 +1,41 @@
+--- net/minecraft/server/players/PlayerList.java
++++ net/minecraft/server/players/PlayerList.java
+@@ -251,11 +251,11 @@
+                }
+             }
+          }
+       }
+ 
+-      var2.initMenu();
++      var2.initInventoryMenu();
+    }
+ 
+    protected void updateEntireScoreboard(ServerScoreboard var1, ServerPlayer var2) {
+       HashSet var3 = Sets.newHashSet();
+       Iterator var4 = var1.getPlayerTeams().iterator();
+@@ -484,11 +484,11 @@
+       this.sendLevelInfo(var9, var8);
+       this.sendPlayerPermissionLevel(var9);
+       var8.addRespawnedPlayer(var9);
+       this.players.add(var9);
+       this.playersByUUID.put(var9.getUUID(), var9);
+-      var9.initMenu();
++      var9.initInventoryMenu();
+       var9.setHealth(var9.getHealth());
+       if (var16) {
+          var9.connection.send(new ClientboundSoundPacket(SoundEvents.RESPAWN_ANCHOR_DEPLETE, SoundSource.BLOCKS, (double)var3.getX(), (double)var3.getY(), (double)var3.getZ(), 1.0F, 1.0F));
+       }
+ 
+@@ -693,11 +693,11 @@
+       }
+ 
+    }
+ 
+    public void sendAllPlayerInfo(ServerPlayer var1) {
+-      var1.refreshContainer(var1.inventoryMenu);
++      var1.inventoryMenu.sendAllDataToRemote();
+       var1.resetSentInfo();
+       var1.connection.send(new ClientboundSetCarriedItemPacket(var1.getInventory().selected));
+    }
+ 
+    public int getPlayerCount() {

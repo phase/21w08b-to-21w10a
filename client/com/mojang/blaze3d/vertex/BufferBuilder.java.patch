@@ -1,0 +1,24 @@
+--- com/mojang/blaze3d/vertex/BufferBuilder.java
++++ com/mojang/blaze3d/vertex/BufferBuilder.java
+@@ -249,10 +249,21 @@
+       if (this.elementIndex != 0) {
+          throw new IllegalStateException("Not filled all elements of the vertex");
+       } else {
+          ++this.vertices;
+          this.ensureVertexCapacity();
++         if (this.mode == VertexFormat.Mode.LINES || this.mode == VertexFormat.Mode.LINE_STRIP) {
++            int var1 = this.format.getVertexSize();
++            this.buffer.position(this.nextElementByte);
++            ByteBuffer var2 = this.buffer.duplicate();
++            var2.position(this.nextElementByte - var1).limit(this.nextElementByte);
++            this.buffer.put(var2);
++            this.nextElementByte += var1;
++            ++this.vertices;
++            this.ensureVertexCapacity();
++         }
++
+       }
+    }
+ 
+    public void nextElement() {
+       ImmutableList var1 = this.format.getElements();

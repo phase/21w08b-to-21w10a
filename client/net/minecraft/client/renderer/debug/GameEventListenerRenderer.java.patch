@@ -1,0 +1,26 @@
+--- net/minecraft/client/renderer/debug/GameEventListenerRenderer.java
++++ net/minecraft/client/renderer/debug/GameEventListenerRenderer.java
+@@ -48,11 +48,10 @@
+          BlockPos var10 = new BlockPos(var3, 0.0D, var7);
+          this.trackedGameEvents.removeIf(GameEventListenerRenderer.TrackedGameEvent::isExpired);
+          this.trackedListeners.removeIf((var2x) -> {
+             return var2x.isExpired(var9, var10);
+          });
+-         RenderSystem.pushMatrix();
+          RenderSystem.disableTexture();
+          RenderSystem.enableDepthTest();
+          RenderSystem.enableBlend();
+          RenderSystem.defaultBlendFunc();
+          VertexConsumer var11 = var2.getBuffer(RenderType.lines());
+@@ -118,11 +117,10 @@
+          }
+ 
+          RenderSystem.depthMask(true);
+          RenderSystem.enableTexture();
+          RenderSystem.disableBlend();
+-         RenderSystem.popMatrix();
+       }
+    }
+ 
+    private static void renderTransparentFilledBox(AABB var0, float var1, float var2, float var3, float var4) {
+       Camera var5 = Minecraft.getInstance().gameRenderer.getMainCamera();

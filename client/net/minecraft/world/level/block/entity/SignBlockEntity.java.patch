@@ -1,0 +1,72 @@
+--- net/minecraft/world/level/block/entity/SignBlockEntity.java
++++ net/minecraft/world/level/block/entity/SignBlockEntity.java
+@@ -33,10 +33,11 @@
+    private Player playerWhoMayEdit;
+    @Nullable
+    private FormattedCharSequence[] renderMessages;
+    private boolean renderMessagedFiltered;
+    private DyeColor color;
++   private boolean hasGlowingText;
+ 
+    public SignBlockEntity(BlockPos var1, BlockState var2) {
+       super(BlockEntityType.SIGN, var1, var2);
+       this.messages = new Component[]{TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY};
+       this.filteredMessages = new Component[]{TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY};
+@@ -56,10 +57,11 @@
+             var1.putString(FILTERED_TEXT_FIELD_NAMES[var2], Component.Serializer.toJson(var5));
+          }
+       }
+ 
+       var1.putString("Color", this.color.getName());
++      var1.putBoolean("GlowingText", this.hasGlowingText);
+       return var1;
+    }
+ 
+    public void load(CompoundTag var1) {
+       this.isEditable = false;
+@@ -77,10 +79,11 @@
+             this.filteredMessages[var2] = var4;
+          }
+       }
+ 
+       this.renderMessages = null;
++      this.hasGlowingText = var1.getBoolean("GlowingText");
+    }
+ 
+    private Component loadLine(String var1) {
+       Component var2 = this.deserializeTextSafe(var1);
+       if (this.level instanceof ServerLevel) {
+@@ -196,13 +199,31 @@
+    }
+ 
+    public boolean setColor(DyeColor var1) {
+       if (var1 != this.getColor()) {
+          this.color = var1;
+-         this.setChanged();
+-         this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
++         this.markUpdated();
+          return true;
+       } else {
+          return false;
+       }
+    }
++
++   public boolean hasGlowingText() {
++      return this.hasGlowingText;
++   }
++
++   public boolean setHasGlowingText(boolean var1) {
++      if (this.hasGlowingText != var1) {
++         this.hasGlowingText = var1;
++         this.markUpdated();
++         return true;
++      } else {
++         return false;
++      }
++   }
++
++   private void markUpdated() {
++      this.setChanged();
++      this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
++   }
+ }

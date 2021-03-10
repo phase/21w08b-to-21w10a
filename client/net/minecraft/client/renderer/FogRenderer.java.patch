@@ -1,0 +1,63 @@
+--- net/minecraft/client/renderer/FogRenderer.java
++++ net/minecraft/client/renderer/FogRenderer.java
+@@ -1,8 +1,7 @@
+ package net.minecraft.client.renderer;
+ 
+-import com.mojang.blaze3d.platform.GlStateManager;
+ import com.mojang.blaze3d.systems.RenderSystem;
+ import com.mojang.math.Vector3f;
+ import net.minecraft.Util;
+ import net.minecraft.client.Camera;
+ import net.minecraft.client.multiplayer.ClientLevel;
+@@ -179,12 +178,11 @@
+ 
+       RenderSystem.clearColor(fogRed, fogGreen, fogBlue, 0.0F);
+    }
+ 
+    public static void setupNoFog() {
+-      RenderSystem.fogDensity(0.0F);
+-      RenderSystem.fogMode(GlStateManager.FogMode.EXP2);
++      RenderSystem.setShaderFogStart(Float.MAX_VALUE);
+    }
+ 
+    public static void setupFog(Camera var0, FogRenderer.FogMode var1, float var2, boolean var3) {
+       FogType var4 = var0.getFluidInCamera();
+       Entity var5 = var0.getEntity();
+@@ -198,13 +196,10 @@
+             Biome var8 = var7.level.getBiome(var7.blockPosition());
+             if (var8.getBiomeCategory() == Biome.BiomeCategory.SWAMP) {
+                var6 += 0.005F;
+             }
+          }
+-
+-         RenderSystem.fogDensity(var6);
+-         RenderSystem.fogMode(GlStateManager.FogMode.EXP2);
+       } else {
+          float var10;
+          if (var4 == FogType.LAVA) {
+             if (var5 instanceof LivingEntity && ((LivingEntity)var5).hasEffect(MobEffects.FIRE_RESISTANCE)) {
+                var6 = 0.0F;
+@@ -235,20 +230,18 @@
+          } else {
+             var6 = var2 * 0.75F;
+             var10 = var2;
+          }
+ 
+-         RenderSystem.fogStart(var6);
+-         RenderSystem.fogEnd(var10);
+-         RenderSystem.fogMode(GlStateManager.FogMode.LINEAR);
+-         RenderSystem.setupNvFogDistance();
++         RenderSystem.setShaderFogStart(var6);
++         RenderSystem.setShaderFogEnd(var10);
+       }
+ 
+    }
+ 
+    public static void levelFogColor() {
+-      RenderSystem.fog(2918, fogRed, fogGreen, fogBlue, 1.0F);
++      RenderSystem.setShaderFogColor(fogRed, fogGreen, fogBlue);
+    }
+ 
+    public static enum FogMode {
+       FOG_SKY,
+       FOG_TERRAIN;

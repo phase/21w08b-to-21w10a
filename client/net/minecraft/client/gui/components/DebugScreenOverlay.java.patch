@@ -1,0 +1,20 @@
+--- net/minecraft/client/gui/components/DebugScreenOverlay.java
++++ net/minecraft/client/gui/components/DebugScreenOverlay.java
+@@ -94,17 +94,15 @@
+       this.clientChunk = null;
+    }
+ 
+    public void render(PoseStack var1) {
+       this.minecraft.getProfiler().push("debug");
+-      RenderSystem.pushMatrix();
+       Entity var2 = this.minecraft.getCameraEntity();
+       this.block = var2.pick(20.0D, 0.0F, false);
+       this.liquid = var2.pick(20.0D, 0.0F, true);
+       this.drawGameInformation(var1);
+       this.drawSystemInformation(var1);
+-      RenderSystem.popMatrix();
+       if (this.minecraft.options.renderFpsChart) {
+          int var3 = this.minecraft.getWindow().getGuiScaledWidth();
+          this.drawChart(var1, this.minecraft.getFrameTimer(), 0, var3 / 2, true);
+          IntegratedServer var4 = this.minecraft.getSingleplayerServer();
+          if (var4 != null) {

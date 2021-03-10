@@ -1,0 +1,79 @@
+--- net/minecraft/client/multiplayer/ClientPacketListener.java
++++ net/minecraft/client/multiplayer/ClientPacketListener.java
+@@ -104,11 +104,10 @@
+ import net.minecraft.network.protocol.game.ClientboundChangeDifficultyPacket;
+ import net.minecraft.network.protocol.game.ClientboundChatPacket;
+ import net.minecraft.network.protocol.game.ClientboundClearTitlesPacket;
+ import net.minecraft.network.protocol.game.ClientboundCommandSuggestionsPacket;
+ import net.minecraft.network.protocol.game.ClientboundCommandsPacket;
+-import net.minecraft.network.protocol.game.ClientboundContainerAckPacket;
+ import net.minecraft.network.protocol.game.ClientboundContainerClosePacket;
+ import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket;
+ import net.minecraft.network.protocol.game.ClientboundContainerSetDataPacket;
+ import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+ import net.minecraft.network.protocol.game.ClientboundCooldownPacket;
+@@ -188,11 +187,10 @@
+ import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
+ import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
+ import net.minecraft.network.protocol.game.ClientboundUpdateTagsPacket;
+ import net.minecraft.network.protocol.game.ServerboundAcceptTeleportationPacket;
+ import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
+-import net.minecraft.network.protocol.game.ServerboundContainerAckPacket;
+ import net.minecraft.network.protocol.game.ServerboundCustomPayloadPacket;
+ import net.minecraft.network.protocol.game.ServerboundKeepAlivePacket;
+ import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
+ import net.minecraft.network.protocol.game.ServerboundMoveVehiclePacket;
+ import net.minecraft.network.protocol.game.ServerboundResourcePackPacket;
+@@ -927,11 +925,11 @@
+       ItemStack var3 = var1.getItem();
+       int var4 = var1.getSlot();
+       this.minecraft.getTutorial().onGetItem(var3);
+       if (var1.getContainerId() == -1) {
+          if (!(this.minecraft.screen instanceof CreativeModeInventoryScreen)) {
+-            var2.getInventory().setCarried(var3);
++            var2.containerMenu.setCarried(var3);
+          }
+       } else if (var1.getContainerId() == -2) {
+          var2.getInventory().setItem(var4, var3);
+       } else {
+          boolean var5 = false;
+@@ -954,26 +952,10 @@
+          }
+       }
+ 
+    }
+ 
+-   public void handleContainerAck(ClientboundContainerAckPacket var1) {
+-      PacketUtils.ensureRunningOnSameThread(var1, this, (BlockableEventLoop)this.minecraft);
+-      Object var2 = null;
+-      LocalPlayer var3 = this.minecraft.player;
+-      if (var1.getContainerId() == 0) {
+-         var2 = var3.inventoryMenu;
+-      } else if (var1.getContainerId() == var3.containerMenu.containerId) {
+-         var2 = var3.containerMenu;
+-      }
+-
+-      if (var2 != null && !var1.isAccepted()) {
+-         this.send((Packet)(new ServerboundContainerAckPacket(var1.getContainerId(), var1.getUid(), true)));
+-      }
+-
+-   }
+-
+    public void handleContainerContent(ClientboundContainerSetContentPacket var1) {
+       PacketUtils.ensureRunningOnSameThread(var1, this, (BlockableEventLoop)this.minecraft);
+       LocalPlayer var2 = this.minecraft.player;
+       if (var1.getContainerId() == 0) {
+          var2.inventoryMenu.setAll(var1.getItems());
+@@ -2038,11 +2020,11 @@
+    }
+ 
+    public void handlePlaceRecipe(ClientboundPlaceGhostRecipePacket var1) {
+       PacketUtils.ensureRunningOnSameThread(var1, this, (BlockableEventLoop)this.minecraft);
+       AbstractContainerMenu var2 = this.minecraft.player.containerMenu;
+-      if (var2.containerId == var1.getContainerId() && var2.isSynched(this.minecraft.player)) {
++      if (var2.containerId == var1.getContainerId()) {
+          this.recipeManager.byKey(var1.getRecipe()).ifPresent((var2x) -> {
+             if (this.minecraft.screen instanceof RecipeUpdateListener) {
+                RecipeBookComponent var3 = ((RecipeUpdateListener)this.minecraft.screen).getRecipeBookComponent();
+                var3.setupGhostRecipe(var2x, var2.slots);
+             }

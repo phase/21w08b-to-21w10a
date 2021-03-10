@@ -1,0 +1,67 @@
+--- net/minecraft/world/entity/player/Inventory.java
++++ net/minecraft/world/entity/player/Inventory.java
+@@ -30,19 +30,17 @@
+    public final NonNullList<ItemStack> armor;
+    public final NonNullList<ItemStack> offhand;
+    private final List<NonNullList<ItemStack>> compartments;
+    public int selected;
+    public final Player player;
+-   private ItemStack carried;
+    private int timesChanged;
+ 
+    public Inventory(Player var1) {
+       this.items = NonNullList.withSize(36, ItemStack.EMPTY);
+       this.armor = NonNullList.withSize(4, ItemStack.EMPTY);
+       this.offhand = NonNullList.withSize(1, ItemStack.EMPTY);
+       this.compartments = ImmutableList.of(this.items, this.armor, this.offhand);
+-      this.carried = ItemStack.EMPTY;
+       this.player = var1;
+    }
+ 
+    public ItemStack getSelected() {
+       return isHotbarSlot(this.selected) ? (ItemStack)this.items.get(this.selected) : ItemStack.EMPTY;
+@@ -159,18 +157,19 @@
+    }
+ 
+    public int clearOrCountMatchingItems(Predicate<ItemStack> var1, int var2, Container var3) {
+       byte var4 = 0;
+       boolean var5 = var2 == 0;
+-      int var6 = var4 + ContainerHelper.clearOrCountMatchingItems((Container)this, var1, var2 - var4, var5);
+-      var6 += ContainerHelper.clearOrCountMatchingItems(var3, var1, var2 - var6, var5);
+-      var6 += ContainerHelper.clearOrCountMatchingItems(this.carried, var1, var2 - var6, var5);
+-      if (this.carried.isEmpty()) {
+-         this.carried = ItemStack.EMPTY;
++      int var7 = var4 + ContainerHelper.clearOrCountMatchingItems((Container)this, var1, var2 - var4, var5);
++      var7 += ContainerHelper.clearOrCountMatchingItems(var3, var1, var2 - var7, var5);
++      ItemStack var6 = this.player.containerMenu.getCarried();
++      var7 += ContainerHelper.clearOrCountMatchingItems(var6, var1, var2 - var7, var5);
++      if (var6.isEmpty()) {
++         this.player.containerMenu.setCarried(ItemStack.EMPTY);
+       }
+ 
+-      return var6;
++      return var7;
+    }
+ 
+    private int addResource(ItemStack var1) {
+       int var2 = this.getSlotWithRemainingSpace(var1);
+       if (var2 == -1) {
+@@ -562,18 +561,10 @@
+ 
+    public int getTimesChanged() {
+       return this.timesChanged;
+    }
+ 
+-   public void setCarried(ItemStack var1) {
+-      this.carried = var1;
+-   }
+-
+-   public ItemStack getCarried() {
+-      return this.carried;
+-   }
+-
+    public boolean stillValid(Player var1) {
+       if (this.player.isRemoved()) {
+          return false;
+       } else {
+          return var1.distanceToSqr(this.player) <= 64.0D;

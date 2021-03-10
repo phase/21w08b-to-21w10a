@@ -1,0 +1,51 @@
+--- net/minecraft/client/renderer/debug/ChunkBorderRenderer.java
++++ net/minecraft/client/renderer/debug/ChunkBorderRenderer.java
+@@ -18,13 +18,10 @@
+       this.minecraft = var1;
+    }
+ 
+    public void render(PoseStack var1, MultiBufferSource var2, double var3, double var5, double var7) {
+       RenderSystem.enableDepthTest();
+-      RenderSystem.shadeModel(7425);
+-      RenderSystem.enableAlphaTest();
+-      RenderSystem.defaultAlphaFunc();
+       Entity var9 = this.minecraft.gameRenderer.getMainCamera().getEntity();
+       Tesselator var10 = Tesselator.getInstance();
+       BufferBuilder var11 = var10.getBuilder();
+       double var12 = (double)this.minecraft.level.getMinBuildHeight() - var5;
+       double var14 = (double)this.minecraft.level.getMaxBuildHeight() - var5;
+@@ -32,11 +29,11 @@
+       RenderSystem.disableBlend();
+       ChunkPos var16 = var9.chunkPosition();
+       double var17 = (double)var16.getMinBlockX() - var3;
+       double var19 = (double)var16.getMinBlockZ() - var7;
+       RenderSystem.lineWidth(1.0F);
+-      var11.begin(VertexFormat.Mode.LINE_STRIP, DefaultVertexFormat.POSITION_COLOR);
++      var11.begin(VertexFormat.Mode.DEBUG_LINE_STRIP, DefaultVertexFormat.POSITION_COLOR);
+ 
+       int var21;
+       int var22;
+       for(var21 = -16; var21 <= 32; var21 += 16) {
+          for(var22 = -16; var22 <= 32; var22 += 16) {
+@@ -81,11 +78,11 @@
+          var11.vertex(var17, var24, var19).color(1.0F, 1.0F, 0.0F, 0.0F).endVertex();
+       }
+ 
+       var10.end();
+       RenderSystem.lineWidth(2.0F);
+-      var11.begin(VertexFormat.Mode.LINE_STRIP, DefaultVertexFormat.POSITION_COLOR);
++      var11.begin(VertexFormat.Mode.DEBUG_LINE_STRIP, DefaultVertexFormat.POSITION_COLOR);
+ 
+       for(var21 = 0; var21 <= 16; var21 += 16) {
+          for(var22 = 0; var22 <= 16; var22 += 16) {
+             var11.vertex(var17 + (double)var21, var12, var19 + (double)var22).color(0.25F, 0.25F, 1.0F, 0.0F).endVertex();
+             var11.vertex(var17 + (double)var21, var12, var19 + (double)var22).color(0.25F, 0.25F, 1.0F, 1.0F).endVertex();
+@@ -107,8 +104,7 @@
+ 
+       var10.end();
+       RenderSystem.lineWidth(1.0F);
+       RenderSystem.enableBlend();
+       RenderSystem.enableTexture();
+-      RenderSystem.shadeModel(7424);
+    }
+ }

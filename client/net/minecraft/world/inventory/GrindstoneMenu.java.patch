@@ -1,0 +1,25 @@
+--- net/minecraft/world/inventory/GrindstoneMenu.java
++++ net/minecraft/world/inventory/GrindstoneMenu.java
+@@ -51,21 +51,20 @@
+       this.addSlot(new Slot(this.resultSlots, 2, 129, 34) {
+          public boolean mayPlace(ItemStack var1) {
+             return false;
+          }
+ 
+-         public ItemStack onTake(Player var1, ItemStack var2) {
++         public void onTake(Player var1, ItemStack var2) {
+             var3.execute((var1x, var2x) -> {
+                if (var1x instanceof ServerLevel) {
+                   ExperienceOrb.award((ServerLevel)var1x, Vec3.atCenterOf(var2x), this.getExperienceAmount(var1x));
+                }
+ 
+                var1x.levelEvent(1042, var2x, 0);
+             });
+             GrindstoneMenu.this.repairSlots.setItem(0, ItemStack.EMPTY);
+             GrindstoneMenu.this.repairSlots.setItem(1, ItemStack.EMPTY);
+-            return var2;
+          }
+ 
+          private int getExperienceAmount(Level var1) {
+             byte var2 = 0;
+             int var4 = var2 + this.getExperienceFromItem(GrindstoneMenu.this.repairSlots.getItem(0));

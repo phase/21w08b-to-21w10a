@@ -1,0 +1,17 @@
+--- net/minecraft/client/gui/screens/inventory/tooltip/ClientBundleTooltip.java
++++ net/minecraft/client/gui/screens/inventory/tooltip/ClientBundleTooltip.java
+@@ -80,12 +80,12 @@
+       this.blit(var5, var1, var2 + var4 * 20, var6, var7, ClientBundleTooltip.Texture.BORDER_CORNER_BOTTOM);
+       this.blit(var5, var1 + var3 * 18 + 1, var2 + var4 * 20, var6, var7, ClientBundleTooltip.Texture.BORDER_CORNER_BOTTOM);
+    }
+ 
+    private void blit(PoseStack var1, int var2, int var3, int var4, TextureManager var5, ClientBundleTooltip.Texture var6) {
+-      RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+-      var5.bind(TEXTURE_LOCATION);
++      RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
++      RenderSystem.setShaderTexture(0, TEXTURE_LOCATION);
+       GuiComponent.blit(var1, var2, var3, var4, (float)var6.x, (float)var6.y, var6.w, var6.h, 128, 128);
+    }
+ 
+    private int gridSizeX() {
+       return Math.max(2, (int)Math.ceil(Math.sqrt((double)this.items.size() + 1.0D)));

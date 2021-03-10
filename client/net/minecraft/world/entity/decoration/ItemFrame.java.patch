@@ -1,0 +1,140 @@
+--- net/minecraft/world/entity/decoration/ItemFrame.java
++++ net/minecraft/world/entity/decoration/ItemFrame.java
+@@ -7,10 +7,11 @@
+ import net.minecraft.network.protocol.Packet;
+ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+ import net.minecraft.network.syncher.EntityDataAccessor;
+ import net.minecraft.network.syncher.EntityDataSerializers;
+ import net.minecraft.network.syncher.SynchedEntityData;
++import net.minecraft.sounds.SoundEvent;
+ import net.minecraft.sounds.SoundEvents;
+ import net.minecraft.world.InteractionHand;
+ import net.minecraft.world.InteractionResult;
+ import net.minecraft.world.damagesource.DamageSource;
+ import net.minecraft.world.entity.Entity;
+@@ -151,19 +152,23 @@
+       } else if (this.isInvulnerableTo(var1)) {
+          return false;
+       } else if (!var1.isExplosion() && !this.getItem().isEmpty()) {
+          if (!this.level.isClientSide) {
+             this.dropItem(var1.getEntity(), false);
+-            this.playSound(SoundEvents.ITEM_FRAME_REMOVE_ITEM, 1.0F, 1.0F);
++            this.playSound(this.getRemoveItemSound(), 1.0F, 1.0F);
+          }
+ 
+          return true;
+       } else {
+          return super.hurt(var1, var2);
+       }
+    }
+ 
++   public SoundEvent getRemoveItemSound() {
++      return SoundEvents.ITEM_FRAME_REMOVE_ITEM;
++   }
++
+    public int getWidth() {
+       return 12;
+    }
+ 
+    public int getHeight() {
+@@ -175,18 +180,26 @@
+       var3 *= 64.0D * getViewScale();
+       return var1 < var3 * var3;
+    }
+ 
+    public void dropItem(@Nullable Entity var1) {
+-      this.playSound(SoundEvents.ITEM_FRAME_BREAK, 1.0F, 1.0F);
++      this.playSound(this.getBreakSound(), 1.0F, 1.0F);
+       this.dropItem(var1, true);
+    }
+ 
++   public SoundEvent getBreakSound() {
++      return SoundEvents.ITEM_FRAME_BREAK;
++   }
++
+    public void playPlacementSound() {
+-      this.playSound(SoundEvents.ITEM_FRAME_PLACE, 1.0F, 1.0F);
++      this.playSound(this.getPlaceSound(), 1.0F, 1.0F);
+    }
+ 
++   public SoundEvent getPlaceSound() {
++      return SoundEvents.ITEM_FRAME_PLACE;
++   }
++
+    private void dropItem(@Nullable Entity var1, boolean var2) {
+       if (!this.fixed) {
+          ItemStack var3 = this.getItem();
+          this.setItem(ItemStack.EMPTY);
+          if (!this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+@@ -246,19 +259,23 @@
+          var1.setEntityRepresentation(this);
+       }
+ 
+       this.getEntityData().set(DATA_ITEM, var1);
+       if (!var1.isEmpty()) {
+-         this.playSound(SoundEvents.ITEM_FRAME_ADD_ITEM, 1.0F, 1.0F);
++         this.playSound(this.getAddItemSound(), 1.0F, 1.0F);
+       }
+ 
+       if (var2 && this.pos != null) {
+          this.level.updateNeighbourForOutputSignal(this.pos, Blocks.AIR);
+       }
+ 
+    }
+ 
++   public SoundEvent getAddItemSound() {
++      return SoundEvents.ITEM_FRAME_ADD_ITEM;
++   }
++
+    public SlotAccess getSlot(int var1) {
+       return var1 == 0 ? new SlotAccess() {
+          public ItemStack get() {
+             return ItemFrame.this.getItem();
+          }
+@@ -348,20 +365,24 @@
+                if (!var1.getAbilities().instabuild) {
+                   var3.shrink(1);
+                }
+             }
+          } else {
+-            this.playSound(SoundEvents.ITEM_FRAME_ROTATE_ITEM, 1.0F, 1.0F);
++            this.playSound(this.getRotateItemSound(), 1.0F, 1.0F);
+             this.setRotation(this.getRotation() + 1);
+          }
+ 
+          return InteractionResult.CONSUME;
+       } else {
+          return !var4 && !var5 ? InteractionResult.PASS : InteractionResult.SUCCESS;
+       }
+    }
+ 
++   public SoundEvent getRotateItemSound() {
++      return SoundEvents.ITEM_FRAME_ROTATE_ITEM;
++   }
++
+    public int getAnalogOutput() {
+       return this.getItem().isEmpty() ? 0 : this.getRotation() % 8 + 1;
+    }
+ 
+    public Packet<?> getAddEntityPacket() {
+@@ -376,18 +397,14 @@
+    public ItemStack getPickResult() {
+       ItemStack var1 = this.getItem();
+       return var1.isEmpty() ? this.getFrameItemStack() : var1.copy();
+    }
+ 
+-   private ItemStack getFrameItemStack() {
+-      return this.isGlowFrame() ? new ItemStack(Items.GLOW_ITEM_FRAME) : new ItemStack(Items.ITEM_FRAME);
++   protected ItemStack getFrameItemStack() {
++      return new ItemStack(Items.ITEM_FRAME);
+    }
+ 
+-   public boolean isGlowFrame() {
+-      return this.getType() == EntityType.GLOW_ITEM_FRAME;
+-   }
+-
+    static {
+       DATA_ITEM = SynchedEntityData.defineId(ItemFrame.class, EntityDataSerializers.ITEM_STACK);
+       DATA_ROTATION = SynchedEntityData.defineId(ItemFrame.class, EntityDataSerializers.INT);
+    }
+ }

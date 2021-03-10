@@ -1,0 +1,22 @@
+--- net/minecraft/client/renderer/debug/BrainDebugRenderer.java
++++ net/minecraft/client/renderer/debug/BrainDebugRenderer.java
+@@ -66,19 +66,17 @@
+    public void addOrUpdateBrainDump(BrainDebugRenderer.BrainDump var1) {
+       this.brainDumpsPerEntity.put(var1.uuid, var1);
+    }
+ 
+    public void render(PoseStack var1, MultiBufferSource var2, double var3, double var5, double var7) {
+-      RenderSystem.pushMatrix();
+       RenderSystem.enableBlend();
+       RenderSystem.defaultBlendFunc();
+       RenderSystem.disableTexture();
+       this.clearRemovedEntities();
+       this.doRender(var3, var5, var7);
+       RenderSystem.enableTexture();
+       RenderSystem.disableBlend();
+-      RenderSystem.popMatrix();
+       if (!this.minecraft.player.isSpectator()) {
+          this.updateLastLookedAtUuid();
+       }
+ 
+    }

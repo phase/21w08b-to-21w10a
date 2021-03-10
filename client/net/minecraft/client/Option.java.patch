@@ -1,0 +1,26 @@
+--- net/minecraft/client/Option.java
++++ net/minecraft/client/Option.java
+@@ -1,10 +1,9 @@
+ package net.minecraft.client;
+ 
+ import com.google.common.collect.ImmutableList;
+ import com.mojang.blaze3d.pipeline.RenderTarget;
+-import com.mojang.blaze3d.platform.GlStateManager;
+ import com.mojang.blaze3d.platform.Window;
+ import java.util.Arrays;
+ import java.util.List;
+ import java.util.stream.Collectors;
+ import java.util.stream.IntStream;
+@@ -302,11 +301,11 @@
+       GRAPHICS_TOOLTIP_FABULOUS = new TranslatableComponent("options.graphics.fabulous.tooltip", new Object[]{(new TranslatableComponent("options.graphics.fabulous")).withStyle(ChatFormatting.ITALIC)});
+       GRAPHICS_TOOLTIP_FANCY = new TranslatableComponent("options.graphics.fancy.tooltip");
+       GRAPHICS = CycleOption.create("options.graphics", Arrays.asList(GraphicsStatus.values()), (List)Stream.of(GraphicsStatus.values()).filter((var0) -> {
+          return var0 != GraphicsStatus.FABULOUS;
+       }).collect(Collectors.toList()), () -> {
+-         return !GlStateManager.supportsFramebufferBlit() || Minecraft.getInstance().getGpuWarnlistManager().isSkippingFabulous();
++         return Minecraft.getInstance().getGpuWarnlistManager().isSkippingFabulous();
+       }, (var0) -> {
+          TranslatableComponent var1 = new TranslatableComponent(var0.getKey());
+          return (Component)(var0 == GraphicsStatus.FABULOUS ? var1.withStyle(ChatFormatting.ITALIC) : var1);
+       }, (var0) -> {
+          return var0.graphicsMode;
